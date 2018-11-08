@@ -1,0 +1,173 @@
+[gd_scene load_steps=12 format=1]
+
+[ext_resource path="res://Art/background.png" type="Texture" id=1]
+[ext_resource path="res://Other/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/beacon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/darkness.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=7]
+[ext_resource path="res://Art/light.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/coin.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/healthpack.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/portal_blue.tscn" type="PackedScene" id=11]
+
+[node name="StoreRoom" type="Node2D" groups=[
+"ladder",
+]]
+
+[node name="CanvasParallax" type="CanvasLayer" parent="."]
+
+editor/display_folded = true
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasParallax"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasParallax/ParallaxBackground"]
+
+motion/scale = Vector2( 0.7, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="CanvasParallax/ParallaxBackground/ParallaxLayer"]
+
+visibility/visible = false
+transform/pos = Vector2( 178, 94 )
+texture = ExtResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 65520, 19, 65521, 19, 65522, 19, 65523, 19, 65524, 19, 65525, 19, 65526, 19, 65527, 19, 65528, 19, 65529, 19, 65530, 19, 65531, 19, 65532, 19, 65533, 19, 65534, 19, 65535, 19, 0, 19, 1, 19, 2, 19, 3, 19, 4, 19, 5, 19, 6, 19, 7, 19, 8, 19, 9, 19, 10, 19, 11, 19, 12, 19, 13, 19, 14, 19, 15, 19, 131056, 19, 131057, 19, 131058, 19, 131059, 19, 131060, 19, 131061, 19, 131063, 19, 131064, 19, 131065, 19, 131066, 19, 131067, 19, 131068, 19, 131069, 19, 131070, 19, 131071, 19, 65536, 19, 65537, 19, 65538, 19, 65539, 19, 65540, 19, 65541, 19, 65542, 19, 65543, 19, 65544, 19, 65545, 19, 65546, 19, 65547, 19, 65548, 19, 65549, 19, 65550, 19, 65551, 19, 196592, 19, 196593, 19, 196594, 19, 196595, 19, 196596, 19, 196597, 19, 196598, 19, 196599, 19, 196600, 19, 196601, 19, 196602, 19, 196603, 19, 196604, 19, 196605, 19, 196606, 19, 196607, 19, 131072, 19, 131073, 19, 131074, 19, 131075, 19, 131076, 19, 131077, 19, 131078, 19, 131079, 19, 131080, 19, 131081, 19, 131082, 19, 131083, 19, 131084, 19, 131085, 19, 131086, 19, 131087, 19, 131099, 17, 262128, 19, 262129, 25, 262130, 25, 262131, 39, 262132, 39, 262133, 39, 262134, 39, 262135, 39, 262136, 39, 262137, 39, 262138, 39, 262139, 39, 262140, 25, 262141, 25, 262142, 25, 262143, 25, 196608, 25, 196609, 25, 196610, 25, 196611, 25, 196612, 25, 196613, 25, 196614, 25, 196615, 25, 196616, 25, 196617, 22, 196618, 19, 196619, 19, 196620, 19, 196621, 19, 196622, 19, 196623, 19, 196635, 17, 327664, 19, 327665, 25, 327666, 25, 327667, 39, 327668, 39, 327669, 39, 327670, 39, 327671, 39, 327672, 39, 327673, 39, 327674, 39, 327675, 39, 327676, 25, 327677, 25, 327678, 25, 327679, 25, 262144, 25, 262145, 25, 262146, 25, 262147, 25, 262148, 25, 262149, 25, 262150, 25, 262151, 25, 262152, 25, 262153, 22, 262154, 19, 262155, 19, 262156, 19, 262157, 19, 262158, 19, 262159, 19, 262171, 17, 393200, 19, 393201, 25, 393202, 25, 393203, 39, 393209, 30, 393211, 536870929, 393212, 17, 327682, 30, 327683, 30, 327685, 17, 327686, 17, 327687, 30, 327688, 17, 327689, 22, 327690, 19, 327691, 19, 327692, 19, 327693, 19, 327694, 19, 327695, 19, 458734, 39, 458735, 39, 458736, 25, 458737, 25, 458738, 39, 458739, 25, 458746, 30, 458747, 536870929, 458748, 17, 393217, 31, 393218, 30, 393220, 31, 393221, 17, 393222, 17, 393223, 30, 393224, 17, 393225, 25, 393226, 25, 393227, 25, 393228, 25, 393229, 25, 393230, 25, 393231, 25, 524272, 25, 524273, 25, 524274, 25, 524275, 25, 524283, 30, 524284, 17, 458753, 31, 458755, 30, 458756, 31, 458757, 17, 458758, 31, 458759, 17, 458760, 17, 589808, 25, 589809, 25, 589810, 25, 589811, 25, 589820, 17, 589821, 17, 589822, 17, 589823, 24, 524288, 24, 524289, 31, 524290, 30, 524291, 30, 655343, 39, 655344, 25, 655345, 25, 655346, 39, 655347, 39, 655348, 39, 655349, 39, 655350, 39, 655351, 39, 655352, 39, 655353, 39, 655354, 39, 655355, 39, 655356, 39, 655357, 18, 655358, 18, 655359, 18, 589824, 18, 589825, 18, 589826, 18, 589827, 18, 589828, 18, 589829, 18, 589830, 18, 589831, 18, 589832, 18, 589833, 18, 589834, 18, 589835, 18, 589836, 18, 589837, 18, 589838, 18, 589839, 18, 720880, 19, 720881, 19, 720882, 19, 720883, 19, 720884, 19, 720885, 19, 720886, 19, 720887, 19, 720888, 19, 720889, 19, 720890, 19, 720891, 19, 720892, 19, 720893, 19, 720894, 19, 720895, 19, 655360, 19, 655361, 19, 655362, 19, 655363, 19, 655364, 19, 655365, 19, 655366, 19, 655367, 19, 655368, 19, 655369, 19, 655370, 19, 655371, 19, 655372, 19, 655373, 19, 655374, 19, 655375, 19, 786416, 19, 786417, 19, 786418, 19, 786419, 19, 786420, 19, 786421, 19, 786422, 19, 786423, 19, 786424, 19, 786425, 19, 786426, 19, 786427, 19, 786428, 19, 786429, 19, 786430, 19, 786431, 19, 720896, 19, 720897, 19, 720898, 19, 720899, 19, 720900, 19, 720901, 19, 720902, 19, 720903, 19, 720904, 19, 720905, 19, 720906, 19, 720907, 19, 720908, 19, 720909, 19, 720910, 19, 720911, 19, 851952, 19, 851953, 19, 851954, 19, 851955, 19, 851956, 19, 851957, 19, 851958, 19, 851959, 19, 851960, 19, 851961, 19, 851962, 19, 851963, 19, 851964, 19, 851965, 19, 851966, 19, 851967, 19, 786432, 19, 786433, 19, 786434, 19, 786435, 19, 786436, 19, 786437, 19, 786438, 19, 786439, 19, 786440, 19, 786441, 19, 786442, 19, 786443, 19, 786444, 19, 786445, 19, 786446, 19, 786447, 19, 917500, 19, 917501, 19, 917502, 19, 917503, 19, 851968, 19, 851969, 19, 851970, 19, 851971, 19, 851972, 19, 851973, 19, 851974, 19, 851975, 19, 851976, 19, 851977, 19, 851978, 19, 851979, 19, 851980, 19, 851981, 19, 851982, 19, 851983, 19 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 160, 128 )
+y_lock = true
+
+[node name="Beacon" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( -128, 128 )
+
+[node name="SpawnPoint1" type="Position2D" parent="."]
+
+transform/pos = Vector2( -144, 128 )
+
+[node name="SpawnPoint2" type="Position2D" parent="."]
+
+transform/pos = Vector2( 163, 132 )
+
+[node name="Darkness" parent="." instance=ExtResource( 6 )]
+
+[node name="LightPanel" type="Light2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( 160, 80 )
+enabled = true
+editor_only = false
+texture = ExtResource( 7 )
+offset = Vector2( 0, 0 )
+scale = 1.5
+color = Color( 0.761719, 0.921021, 0.9375, 1 )
+energy = 1.3
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="LightPanel"]
+
+visibility/visible = false
+texture = ExtResource( 8 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="LightPanel1" type="Light2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( -176, 112 )
+enabled = true
+editor_only = false
+texture = ExtResource( 7 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 0.761719, 0.921021, 0.9375, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="LightPanel1"]
+
+visibility/visible = false
+texture = ExtResource( 8 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="coin" parent="." instance=ExtResource( 9 )]
+
+transform/pos = Vector2( -50, 132 )
+
+[node name="coin1" parent="." instance=ExtResource( 9 )]
+
+transform/pos = Vector2( -36, 132 )
+
+[node name="HealthPack" parent="." instance=ExtResource( 10 )]
+
+transform/pos = Vector2( -176, 128 )
+
+[node name="PortalBlue" parent="." instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 208, 128 )
+scene_index = 4
+start_position = 3
+
+

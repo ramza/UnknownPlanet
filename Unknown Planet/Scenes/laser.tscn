@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://Scripts/laser.gd" type="Script" id=1]
+[ext_resource path="res://Art/laser.png" type="Texture" id=2]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 2, 1 )
+
+[node name="laser" type="KinematicBody2D" groups=[
+"player_lasers",
+]]
+
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+z/z = 1
+texture = ExtResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+
+enabled = true
+editor_only = false
+texture = ExtResource( 3 )
+offset = Vector2( 0, 0 )
+scale = 0.5
+color = Color( 1, 1, 1, 1 )
+energy = 0.5
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, -0.486099 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+transform/pos = Vector2( 0, -0.486099 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+

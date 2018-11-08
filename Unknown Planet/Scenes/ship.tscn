@@ -1,0 +1,334 @@
+[gd_scene load_steps=23 format=1]
+
+[ext_resource path="res://Art/background.png" type="Texture" id=1]
+[ext_resource path="res://Other/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/character_dialogue.gd" type="Script" id=5]
+[ext_resource path="res://Art/doctor.png" type="Texture" id=6]
+[ext_resource path="res://Art/pilot.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/shop.gd" type="Script" id=8]
+[ext_resource path="res://Art/shop_panel.png" type="Texture" id=9]
+[ext_resource path="res://Art/heart.png" type="Texture" id=10]
+[ext_resource path="res://Art/shop_icon_border.png" type="Texture" id=11]
+[ext_resource path="res://Art/icon_gun.png" type="Texture" id=12]
+[ext_resource path="res://Art/helmet.png" type="Texture" id=13]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=14]
+[ext_resource path="res://Other/ingame.fnt" type="BitmapFont" id=15]
+[ext_resource path="res://Scenes/beacon.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/darkness.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Art/light.png" type="Texture" id=18]
+[ext_resource path="res://Art/spaceship_window.png" type="Texture" id=19]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="SampleLibrary" id=3]
+
+
+[node name="Ship" type="Node2D" groups=[
+"ladder",
+]]
+
+[node name="CanvasParallax" type="CanvasLayer" parent="."]
+
+editor/display_folded = true
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasParallax"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasParallax/ParallaxBackground"]
+
+motion/scale = Vector2( 0.7, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="CanvasParallax/ParallaxBackground/ParallaxLayer"]
+
+transform/pos = Vector2( 178, 94 )
+texture = ExtResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 65520, 19, 65521, 19, 65522, 19, 65523, 19, 65524, 19, 65525, 19, 65526, 19, 65527, 19, 65528, 19, 65529, 19, 65530, 19, 65531, 19, 65532, 19, 65533, 19, 65534, 19, 65535, 19, 0, 19, 1, 19, 2, 19, 3, 19, 4, 19, 5, 19, 6, 19, 7, 19, 8, 19, 9, 19, 10, 19, 11, 19, 12, 19, 13, 19, 14, 19, 15, 19, 16, 19, 17, 19, 18, 19, 19, 19, 20, 19, 21, 19, 22, 19, 23, 19, 131056, 19, 131057, 19, 131058, 19, 131059, 19, 131060, 19, 131061, 19, 131062, 19, 131063, 19, 131064, 19, 131065, 19, 131066, 19, 131067, 19, 131068, 19, 131069, 19, 131070, 19, 131071, 19, 65536, 19, 65537, 19, 65538, 19, 65539, 19, 65540, 19, 65541, 19, 65542, 19, 65543, 19, 65544, 19, 65545, 19, 65546, 19, 65547, 19, 65548, 19, 65549, 19, 65550, 19, 65551, 19, 65552, 19, 65553, 19, 65554, 19, 65555, 19, 65556, 19, 65557, 19, 65558, 19, 65559, 19, 65561, 17, 65562, 17, 196592, 19, 196593, 19, 196594, 19, 196595, 19, 196596, 19, 196597, 19, 196598, 19, 196599, 19, 196600, 19, 196601, 19, 196602, 19, 196603, 19, 196604, 19, 196605, 19, 196606, 19, 196607, 19, 131072, 19, 131073, 25, 131074, 25, 131075, 25, 131076, 25, 131077, 17, 131078, 17, 131079, 17, 131080, 17, 131081, 17, 131082, 17, 131083, 17, 131084, 17, 131085, 25, 131086, 25, 131087, 25, 131088, 25, 131089, 25, 131090, 25, 131091, 22, 131092, 19, 131093, 19, 131094, 19, 131095, 19, 131099, 17, 262128, 19, 262129, 19, 262130, 19, 262131, 19, 262132, 19, 262133, 19, 262134, 19, 262135, 19, 262136, 19, 262137, 19, 262138, 19, 262139, 19, 262140, 19, 262141, 19, 262142, 19, 262143, 19, 196608, 25, 196609, 536870929, 196610, 536870929, 196611, 536870929, 196612, 536870929, 196613, 17, 196614, 17, 196618, 17, 196619, 17, 196620, 17, 196621, 17, 196622, 17, 196623, 17, 196624, 17, 196625, 17, 196626, 17, 196627, 22, 196628, 19, 196629, 19, 196630, 19, 196631, 19, 196633, 17, 196634, 17, 196635, 17, 327664, 19, 327665, 19, 327666, 19, 327667, 19, 327668, 25, 327669, 25, 327670, 25, 327671, 25, 327672, 25, 327673, 25, 327674, 25, 327675, 25, 327676, 25, 327677, 25, 327678, 25, 327679, 25, 262144, 536870929, 262145, 536870929, 262146, 536870929, 262147, 536870929, 262148, 536870929, 262149, 17, 262150, 17, 262155, 27, 262156, 27, 262157, 26, 262158, 17, 262159, 17, 262160, 17, 262161, 17, 262162, 17, 262163, 22, 262164, 19, 262165, 19, 262166, 19, 262167, 19, 262171, 17, 393200, 19, 393201, 19, 393202, 19, 393203, 23, 393204, 24, 393206, 24, 393208, 26, 393211, 536870929, 393212, 536870929, 393213, 28, 393214, 536870929, 393215, 28, 327680, 536870929, 327681, 536870929, 327682, 536870929, 327683, 536870929, 327684, 536870929, 327685, 17, 327686, 17, 327691, 27, 327692, 27, 327693, 27, 327694, 17, 327695, 17, 327696, 17, 327697, 17, 327698, 17, 327699, 22, 327700, 19, 327701, 19, 327702, 19, 327703, 19, 327706, 17, 458736, 19, 458737, 19, 458738, 19, 458739, 23, 458747, 536870929, 458748, 536870929, 458749, 29, 458750, 536870929, 458751, 29, 393216, 536870929, 393217, 536870929, 393218, 536870929, 393219, 536870929, 393220, 536870929, 393221, 17, 393222, 17, 393227, 26, 393228, 26, 393230, 17, 393231, 17, 393232, 17, 393233, 17, 393234, 17, 393235, 22, 393236, 19, 393237, 19, 393238, 19, 393239, 19, 524272, 19, 524273, 19, 524274, 19, 524275, 23, 524281, 26, 524283, 536870929, 524284, 20, 524285, 18, 524286, 18, 524287, 18, 458752, 18, 458753, 18, 458754, 18, 458755, 18, 458756, 18, 458757, 21, 458758, 17, 458759, 17, 458760, 17, 458761, 17, 458762, 17, 458763, 17, 458764, 26, 458765, 26, 458766, 17, 458767, 17, 458768, 17, 458769, 24, 458770, 24, 458771, 22, 458772, 19, 458773, 19, 458774, 19, 458775, 19, 589808, 19, 589809, 19, 589810, 19, 589811, 23, 589817, 27, 589818, 27, 589819, 20, 589820, 19, 589821, 19, 589822, 19, 589823, 19, 524288, 19, 524289, 19, 524290, 19, 524291, 19, 524292, 19, 524293, 19, 524294, 18, 524295, 18, 524296, 18, 524297, 18, 524298, 18, 524299, 18, 524300, 18, 524301, 18, 524302, 18, 524303, 18, 524304, 18, 524305, 18, 524306, 18, 524307, 19, 524308, 19, 524309, 19, 524310, 19, 524311, 19, 655344, 19, 655345, 19, 655346, 19, 655347, 19, 655348, 18, 655349, 18, 655350, 18, 655351, 18, 655352, 18, 655353, 18, 655354, 18, 655355, 19, 655356, 19, 655357, 19, 655358, 19, 655359, 19, 589824, 19, 589825, 19, 589826, 19, 589827, 19, 589828, 19, 589829, 19, 589830, 19, 589831, 19, 589832, 19, 589833, 19, 589834, 19, 589835, 19, 589836, 19, 589837, 19, 589838, 19, 589839, 19, 589840, 19, 589841, 19, 589842, 19, 589843, 19, 589844, 19, 589845, 19, 589846, 19, 589847, 19, 720880, 19, 720881, 19, 720882, 19, 720883, 19, 720884, 19, 720885, 19, 720886, 19, 720887, 19, 720888, 19, 720889, 19, 720890, 19, 720891, 19, 720892, 19, 720893, 19, 720894, 19, 720895, 19, 655360, 19, 655361, 19, 655362, 19, 655363, 19, 655364, 19, 655365, 19, 655366, 19, 655367, 19, 655368, 19, 655369, 19, 655370, 19, 655371, 19, 655372, 19, 655373, 19, 655374, 19, 655375, 19, 655376, 19, 655377, 19, 655378, 19, 655379, 19, 655380, 19, 655381, 19, 655382, 19, 655383, 19, 786416, 19, 786417, 19, 786418, 19, 786419, 19, 786420, 19, 786421, 19, 786422, 19, 786423, 19, 786424, 19, 786425, 19, 786426, 19, 786427, 19, 786428, 19, 786429, 19, 786430, 19, 786431, 19, 720896, 19, 720897, 19, 720898, 19, 720899, 19, 720900, 19, 720901, 19, 720902, 19, 720903, 19, 720904, 19, 720905, 19, 720906, 19, 720907, 19, 720908, 19, 720909, 19, 720910, 19, 720911, 19, 720912, 19, 720913, 19, 720914, 19, 720915, 19, 720916, 19, 720917, 19, 720918, 19, 720919, 19, 851952, 19, 851953, 19, 851954, 19, 851955, 19, 851956, 19, 851957, 19, 851958, 19, 851959, 19, 851960, 19, 851961, 19, 851962, 19, 851963, 19, 851964, 19, 851965, 19, 851966, 19, 851967, 19, 786432, 19, 786433, 19, 786434, 19, 786435, 19, 786436, 19, 786437, 19, 786438, 19, 786439, 19, 786440, 19, 786441, 19, 786442, 19, 786443, 19, 786444, 19, 786445, 19, 786446, 19, 786447, 19, 786448, 19, 786449, 19, 786450, 19, 786451, 19, 786452, 19, 786453, 19, 786454, 19, 786455, 19 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 160, 128 )
+y_lock = true
+
+[node name="Doctor" type="KinematicBody2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( 256, 112 )
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 5 )
+get_keycard = false
+messeges = [ "Use the beacon to get down to the planet.", "Talk to the pilot if you want to buy something." ]
+
+[node name="Sprite" type="Sprite" parent="Doctor"]
+
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Area2D" type="Area2D" parent="Doctor"]
+
+editor/display_folded = true
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doctor/Area2D"]
+
+transform/pos = Vector2( 8, 8 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Timer" type="Timer" parent="Doctor"]
+
+process_mode = 1
+wait_time = 0.25
+one_shot = false
+autostart = false
+
+[node name="Pilot" type="KinematicBody2D" parent="."]
+
+transform/pos = Vector2( -192, 128 )
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+
+[node name="Sprite" type="Sprite" parent="Pilot"]
+
+texture = ExtResource( 7 )
+centered = false
+
+[node name="Shop" type="Area2D" parent="Pilot"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 8, 8 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pilot/Shop"]
+
+transform/pos = Vector2( 8, 8 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Timer" type="Timer" parent="Pilot/Shop"]
+
+process_mode = 1
+wait_time = 0.3
+one_shot = false
+autostart = false
+
+[node name="ShopPanel" type="Sprite" parent="Pilot/Shop"]
+
+transform/pos = Vector2( 48, -32 )
+texture = ExtResource( 9 )
+
+[node name="heart" type="Sprite" parent="Pilot/Shop/ShopPanel"]
+
+transform/pos = Vector2( -17, -17 )
+texture = ExtResource( 10 )
+
+[node name="selected" type="Sprite" parent="Pilot/Shop/ShopPanel"]
+
+transform/pos = Vector2( -17, -17 )
+texture = ExtResource( 11 )
+
+[node name="gun" type="Sprite" parent="Pilot/Shop/ShopPanel"]
+
+transform/pos = Vector2( 0, -17 )
+texture = ExtResource( 12 )
+
+[node name="Sprite2" type="Sprite" parent="Pilot/Shop/ShopPanel"]
+
+transform/pos = Vector2( 17, -17 )
+texture = ExtResource( 13 )
+
+[node name="Light2D" type="Light2D" parent="Pilot/Shop/ShopPanel"]
+
+enabled = true
+editor_only = false
+texture = ExtResource( 14 )
+offset = Vector2( 0, 0 )
+scale = 0.2
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="ItemInfo" type="Label" parent="Pilot/Shop/ShopPanel"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -28.0
+margin/top = 0.0
+margin/right = 32.0
+margin/bottom = 32.0
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Increase health $10"
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SamplePlayer2D" type="SamplePlayer2D" parent="Pilot/Shop"]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 3 )
+config/pitch_random = 0.0
+
+[node name="Beacon" parent="." instance=ExtResource( 16 )]
+
+transform/pos = Vector2( 48, 96 )
+
+[node name="SpawnPoint1" type="Position2D" parent="."]
+
+transform/pos = Vector2( 16, 96 )
+
+[node name="Darkness" parent="." instance=ExtResource( 17 )]
+
+[node name="LightPanel" type="Light2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( 160, 80 )
+enabled = true
+editor_only = false
+texture = ExtResource( 14 )
+offset = Vector2( 0, 0 )
+scale = 1.5
+color = Color( 0.761719, 0.921021, 0.9375, 1 )
+energy = 1.3
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="LightPanel"]
+
+visibility/visible = false
+texture = ExtResource( 18 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="LightPanel1" type="Light2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( -176, 112 )
+enabled = true
+editor_only = false
+texture = ExtResource( 14 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 0.761719, 0.921021, 0.9375, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="LightPanel1"]
+
+visibility/visible = false
+texture = ExtResource( 18 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="windows" type="Sprite" parent="."]
+
+transform/pos = Vector2( 144, 80 )
+texture = ExtResource( 19 )
+
+

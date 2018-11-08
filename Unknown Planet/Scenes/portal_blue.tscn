@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://Scripts/portal.gd" type="Script" id=1]
+[ext_resource path="res://Art/megacommando.png" type="Texture" id=2]
+[ext_resource path="res://Audio/SFX/bump.wav" type="Sample" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "down"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource/name = "rise"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -48 ) ]
+}
+
+[sub_resource type="SampleLibrary" id=4]
+
+samples/open = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 3 )
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+
+custom_solver_bias = 0.0
+extents = Vector2( 6, 16 )
+
+[node name="PortalBlue" type="Area2D"]
+
+transform/pos = Vector2( -912, -208 )
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+scene_index = 7
+start_position = 2
+needs_keycard = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/down = SubResource( 2 )
+anims/rise = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Sprite" type="Sprite" parent="."]
+
+z/z = -2
+texture = ExtResource( 2 )
+region = true
+region_rect = Rect2( 336, 288, 16, 64 )
+
+[node name="SamplePlayer2D" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 4 )
+config/pitch_random = 0.0
+
+[node name="Timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = false
+autostart = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+input/pickable = false
+shapes/0/shape = SubResource( 5 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+
+shape = SubResource( 5 )
+trigger = false
+_update_shape_index = 0
+
+

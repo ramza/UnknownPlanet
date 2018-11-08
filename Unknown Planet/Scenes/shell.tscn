@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://Art/shell.png" type="Texture" id=1]
+
+[node name="shell" type="Sprite"]
+
+texture = ExtResource( 1 )
+
+
