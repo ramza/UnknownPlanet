@@ -3,6 +3,7 @@ extends KinematicBody2D
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
+export var hp = 3
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -10,10 +11,6 @@ func _ready():
 	pass
 	
 func take_damage(dmg):
-	pass
-	
-func contact():
-	pass
-	
-func disable():
-	pass
+	hp -= dmg
+	if hp <= 0:
+		queue_free()

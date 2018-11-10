@@ -193,8 +193,11 @@ func knockback(enemy):
 	if enemy.get_pos().x > get_pos().x:
 		velocity.x = -300
 		
-	if enemy.get_pos().x < get_pos().x:
+	elif enemy.get_pos().x < get_pos().x:
 		velocity.x = 300
+	
+	else:
+		velocity.y = -300
 
 func get_center_pos():
 	return get_pos() + get_node("CollisionShape2D").get_pos()
@@ -207,6 +210,8 @@ func death():
 	steps_timer.steps_on = false
 	disable()
 	game_manager.HUD.reset_level()
+	game_manager.health = 3
+	game_manager.ammo = 25
 	
 func disable():
 	can_act = false
@@ -233,7 +238,7 @@ func take_damage(body, dmg):
 	update_healthbar()
 
 func update_healthbar():
-	game_manager.current_scene.find_node("HUD").update_healthbar(hp/float(max_hp))
+	game_manager.HUD.update_healthbar(hp/float(max_hp))
 	
 func on_player_timer_timerout():
 	timer.stop()
@@ -268,6 +273,7 @@ func _ready():
 	area.connect("body_enter", self, "on_player_body_enter")
 	game_manager.current_scene.get_node("Camera2D").start_camera(self)
 	hp = game_manager.health
+
 	update_healthbar()
 	set_fixed_process(true)
 

@@ -23,6 +23,10 @@ func on_laser_body_enter(body):
 	
 	if body.is_in_group("enemy"):
 		body.take_damage(dmg)
+	
+	if body.is_in_group("breakable"):
+		body.take_damage(dmg)
+	
 	queue_free()
 	
 func _fixed_process(delta):

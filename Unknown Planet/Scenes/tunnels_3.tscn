@@ -1,0 +1,332 @@
+[gd_scene load_steps=12 format=1]
+
+[ext_resource path="res://Art/megacommando.png" type="Texture" id=1]
+[ext_resource path="res://Other/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=5]
+[ext_resource path="res://Art/torch.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/torch.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/jelly.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/worm.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/portal.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "burn"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.4, 0.8 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[node name="Tunnels_2" type="Node2D" groups=[
+"ladder",
+]]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="CanvasParallax" type="CanvasLayer" parent="Environment"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Environment/CanvasParallax"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Environment/CanvasParallax/ParallaxBackground"]
+
+motion/scale = Vector2( 0.7, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="Environment/CanvasParallax/ParallaxBackground/ParallaxLayer"]
+
+visibility/visible = false
+transform/pos = Vector2( 80, 128 )
+texture = ExtResource( 1 )
+modulate = Color( 0.0245056, 0.0957773, 0.285156, 1 )
+region = true
+region_rect = Rect2( 448, 384, 192, 64 )
+
+[node name="TileMap" type="TileMap" parent="Environment"]
+
+z/z = -1
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -458764, 45, -393228, 45, -458698, 44, -327692, 45, -393162, 44, -262156, 45, -327626, 44, -196626, 17, -196625, 17, -196620, 45, -262090, 44, -131091, 17, -131090, 17, -131089, 17, -131087, 17, -131086, 17, -131084, 45, -196568, 17, -196567, 17, -196566, 17, -196565, 17, -196563, 17, -196554, 44, -65554, 17, -65553, 17, -65552, 17, -65551, 17, -65550, 17, -65549, 17, -65548, 45, -65547, 17, -65546, 17, -131033, 17, -131032, 17, -131031, 17, -131030, 17, -131029, 17, -131028, 17, -131026, 17, -131018, 44, -131012, 17, -131011, 17, -131010, 17, -19, 17, -18, 17, -17, 17, -16, 17, -15, 17, -14, 17, -13, 17, -12, 45, -65496, 17, -65495, 17, -65494, 17, -65493, 17, -65482, 44, -65478, 17, -65477, 17, -65476, 17, -65475, 17, -65474, 17, -65473, 17, 65518, 17, 65519, 17, 65520, 17, 65521, 17, 65522, 17, 65523, 17, 65524, 45, 41, 17, 42, 17, 43, 17, 54, 42, 58, 17, 59, 17, 60, 17, 61, 17, 62, 17, 63, 17, 131051, 42, 131052, 42, 131053, 42, 131054, 42, 131055, 42, 131056, 42, 131057, 42, 131058, 42, 131059, 42, 131060, 42, 65590, 42, 65591, 42, 65592, 42, 65593, 42, 65594, 42, 65595, 42, 65596, 42, 65597, 42, 65598, 42, 65599, 42, 65600, 44, 65601, 44, 131128, 46, 131136, 51, 131137, 44, 196629, 50, 196639, 46, 196664, 46, 196665, 47, 196671, 46, 196672, 51, 196673, 44, 327659, 41, 327660, 41, 327661, 41, 327662, 41, 327663, 41, 327664, 41, 327665, 41, 327666, 41, 327667, 41, 327668, 41, 327669, 41, 327670, 41, 327671, 41, 327672, 41, 327673, 41, 327674, 41, 327675, 41, 327676, 41, 327677, 41, 327678, 41, 327679, 41, 262144, 41, 262145, 41, 262146, 41, 262147, 41, 262148, 41, 262149, 41, 262150, 41, 262151, 41, 262152, 41, 262153, 41, 262154, 41, 262155, 41, 262156, 41, 262157, 41, 262158, 41, 262159, 41, 262160, 41, 262161, 41, 262162, 41, 262163, 41, 262164, 41, 262165, 41, 262166, 41, 262167, 41, 262168, 41, 262169, 41, 262170, 41, 262171, 41, 262172, 41, 262173, 41, 262174, 41, 262175, 41, 262176, 41, 262177, 41, 262178, 41, 262179, 41, 262180, 41, 262181, 41, 262182, 41, 262183, 41, 262184, 41, 262185, 41, 262186, 41, 262187, 41, 262188, 41, 262189, 41, 262190, 41, 262191, 41, 262192, 41, 262193, 41, 262194, 41, 262195, 41, 262196, 41, 262197, 41, 262198, 41, 262199, 42, 262200, 42, 262201, 42, 262202, 42, 262203, 42, 262204, 42, 262205, 42, 262206, 42, 262207, 42, 262208, 44, 262209, 44, 393199, 17, 393200, 17, 393201, 17, 393202, 17, 393203, 17, 327720, 17, 327721, 17, 327722, 17, 327723, 17, 327724, 17, 327725, 17, 458734, 17, 458735, 17, 458737, 17, 458738, 17, 393256, 17, 393257, 17, 393258, 17, 393259, 17 )
+
+[node name="Darkness" type="Node" parent="Environment"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Environment/Darkness"]
+
+color = Color( 0, 0, 0, 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( -144, 96 )
+
+[node name="Torches" type="Node2D" parent="."]
+
+transform/pos = Vector2( -3.68323, -8.59418 )
+
+[node name="Torch1" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 192, 46 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch1"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch1"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch2" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 477, 54 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch2"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch2"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch3" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 723.683, 56.5942 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch3"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch3"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch4" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 851.683, 56.5942 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch4"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch4"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -128, 53 )
+scale = 0.3
+
+[node name="Torch 2" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 256, 57 )
+scale = 0.6
+min_light = 0.3
+max_light = 1.0
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Jelly" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -19.762, 45.6628 )
+invincible = false
+
+[node name="Jelly1" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 112, 48 )
+invincible = false
+
+[node name="Jelly2" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -80, 48 )
+invincible = false
+
+[node name="Jelly3" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 448, 48 )
+invincible = false
+
+[node name="Jelly4" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 304, 48 )
+invincible = false
+
+[node name="Worm" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 800, 32 )
+
+[node name="SpawnPoint1" type="Position2D" parent="."]
+
+transform/pos = Vector2( -170, 51 )
+
+[node name="SpawnPoint2" type="Position2D" parent="."]
+
+transform/pos = Vector2( 642, 48 )
+
+[node name="Portal" parent="." instance=ExtResource( 10 )]
+
+transform/pos = Vector2( -192, 48 )
+scene_index = 9
+start_position = 2
+
+

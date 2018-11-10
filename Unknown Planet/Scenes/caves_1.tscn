@@ -413,44 +413,50 @@ editor/display_folded = true
 [node name="Jelly" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( -48, 96 )
+invincible = false
 
 [node name="Alien" parent="Enemies" instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 176, 16 )
+speed = 1
 
 [node name="Jelly1" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 16, 32 )
+invincible = false
 
 [node name="Jelly2" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( -80, 64 )
+invincible = false
 
 [node name="Jelly3" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 464, 80 )
+invincible = false
 
 [node name="Jelly4" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 432, 32 )
+invincible = false
 
 [node name="Pickups" type="Node2D" parent="."]
 
 [node name="AmmoPickUp1" parent="Pickups" instance=ExtResource( 10 )]
 
-transform/pos = Vector2( -16, 96 )
+transform/pos = Vector2( -16, 101 )
 
 [node name="AmmoPickUp2" parent="Pickups" instance=ExtResource( 10 )]
 
-transform/pos = Vector2( -128, 96 )
+transform/pos = Vector2( -5.99985, 100 )
 
 [node name="HealthPack" parent="Pickups" instance=ExtResource( 11 )]
 
-transform/pos = Vector2( -176, 96 )
+transform/pos = Vector2( 373.001, 87 )
 
 [node name="AmmoPickUp" parent="Pickups" instance=ExtResource( 10 )]
 
-transform/pos = Vector2( -144, 96 )
+transform/pos = Vector2( 66.0003, 40.9999 )
 
 [node name="SpawnPoint1" type="Position2D" parent="."]
 

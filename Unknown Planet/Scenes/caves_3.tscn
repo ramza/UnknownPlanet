@@ -415,6 +415,7 @@ editor/display_folded = true
 [node name="Jelly" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( -48, 96 )
+invincible = false
 
 [node name="Alien" parent="Enemies" instance=ExtResource( 9 )]
 
@@ -423,18 +424,22 @@ transform/pos = Vector2( 192, 128 )
 [node name="Jelly1" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 16, 96 )
+invincible = false
 
 [node name="Jelly2" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( -80, 64 )
+invincible = false
 
 [node name="Jelly3" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 464, 80 )
+invincible = false
 
 [node name="Jelly4" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 432, 32 )
+invincible = false
 
 [node name="Pickups" type="Node2D" parent="."]
 
@@ -463,6 +468,7 @@ transform/pos = Vector2( 642, 32 )
 [node name="Portal" parent="." instance=ExtResource( 12 )]
 
 transform/pos = Vector2( -240, 48 )
+scene_index = 8
 start_position = 2
 
 [node name="Portal1" parent="." instance=ExtResource( 12 )]

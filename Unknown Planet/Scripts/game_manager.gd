@@ -7,6 +7,10 @@ extends Node
 var player_scene = preload("res://Scenes/player.tscn")
 var player
 
+var last_song
+var ship_song = preload("res://Audio/Music/dungeon_vibes.ogg")
+var caves_song = preload("res://Audio/Music/caves.ogg")
+var music_player
 var scenes = [
      "landing_zone",
      "ship",
@@ -16,14 +20,18 @@ var scenes = [
      "caves_3",
      "base",
      "storeroom",
+     "tunnels_1",
+     "tunnels_2",
+     "tunnels_3",
 ]
 var current_scene_index = 1
 var current_scene
+var prev_scene
 var HUD
 
 var hp_upgrade = false
 var gun_upgrade = false
-var armor_upgrade = false
+var firerate_upgrade = false
 
 var blue_card = false
 
@@ -39,20 +47,34 @@ func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() -1)
 	print(current_scene.get_name())
+	music_player = global_scene.get_node("StreamPlayer")
+	last_song = caves_song
 	initialize_scene()
+
 	
 func initialize_scene():
 	HUD = current_scene.get_node("HUD")
 	player = player_scene.instance()
 	player.set_global_pos(current_scene.get_node("SpawnPoint"+str(spawnpoint)).get_global_pos())
-	current_scene.add_child(player)
 	player.get_node("LaserGun").ammo = ammo
 	if hp_upgrade:
 		player.max_hp += 1
 	if gun_upgrade:
 		player.get_node("LaserGun").energy_replenish_delay = 1.0
-	if ( spawnpoint == 2 ):
+	if firerate_upgrade:
+		player.get_node("LaserGun").firerate = 0.15
+		
+	current_scene.add_child(player)
+	if ( spawnpoint % 2 == 0):
 		player.flip()
+		
+func handle_music():
+	if current_scene_index == 1:
+		music_player.set_stream(ship_song)
+		music_player.play()
+	elif current_scene_index == 0:
+		music_player.set_stream(caves_song)
+		music_player.play()
 
 func save_player_stats():
 	ammo = player.get_node("LaserGun").ammo
@@ -74,6 +96,7 @@ func goto_scene(path):
 func _deferred_goto_scene(path):
     # Immediately free the current scene,
     # there is no risk here.
+    prev_scene = current_scene
     current_scene.free()
 
     # Load new scene.
@@ -87,5 +110,6 @@ func _deferred_goto_scene(path):
 
     # Optional, to make it compatible with the SceneTree.change_scene() API.
     get_tree().set_current_scene(current_scene)
+
     initialize_scene()
 

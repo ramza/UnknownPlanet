@@ -124,6 +124,7 @@ autostart = false
 [node name="Beacon" parent="." instance=ExtResource( 7 )]
 
 transform/pos = Vector2( 64, 128 )
+scene = 1
 
 [node name="SpawnPoint1" type="Position2D" parent="."]
 
@@ -200,6 +201,5 @@ frame = 2
 transform/pos = Vector2( -208, 129 )
 scene_index = 4
 start_position = 2
-needs_keycard = false
 
 

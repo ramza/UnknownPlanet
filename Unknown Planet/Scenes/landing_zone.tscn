@@ -188,7 +188,7 @@ start_position = 2
 
 [node name="SpawnPoint1" type="Position2D" parent="."]
 
-transform/pos = Vector2( -144, 48 )
+transform/pos = Vector2( -144, 53 )
 
 [node name="SpawnPoint2" type="Position2D" parent="."]
 

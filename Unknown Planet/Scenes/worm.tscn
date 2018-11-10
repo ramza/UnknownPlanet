@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=1]
 
-[ext_resource path="res://Scripts/alien.gd" type="Script" id=1]
-[ext_resource path="res://Art/alien.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/worm.gd" type="Script" id=1]
+[ext_resource path="res://Art/worm_monster.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/enemy_state_machine.gd" type="Script" id=3]
 [ext_resource path="res://Audio/SFX/hurt.wav" type="Sample" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 4, 16 )
+extents = Vector2( 40, 30 )
 
 [sub_resource type="Animation" id=2]
 
@@ -24,7 +24,7 @@ tracks/0/keys = {
 "times": FloatArray( 0 ),
 "transitions": FloatArray( 1 ),
 "update": 1,
-"values": [ 5 ]
+"values": [ 7 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -55,10 +55,10 @@ tracks/0/path = NodePath("../Sprite:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.2 ),
-"transitions": FloatArray( 1, 1 ),
+"times": FloatArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 4, 3 ]
+"values": [ 0, 2, 3, 4, 5, 6 ]
 }
 
 [sub_resource type="SampleLibrary" id=5]
@@ -70,7 +70,7 @@ samples/hurt = {
 "sample": ExtResource( 4 )
 }
 
-[node name="Alien" type="KinematicBody2D" groups=[
+[node name="Worm" type="KinematicBody2D" groups=[
 "enemy",
 ]]
 
@@ -82,16 +82,17 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
-hp = 5
+hp = 40
 damage = 1
-speed = 3
-overrun = false
+speed = 2
+overrun = true
 
 [node name="Sprite" type="Sprite" parent="."]
 
+transform/pos = Vector2( 35, 0 )
 texture = ExtResource( 2 )
 vframes = 2
-hframes = 4
+hframes = 5
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -103,7 +104,7 @@ _update_shape_index = 0
 [node name="Timer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 0.3
+wait_time = 0.01
 one_shot = false
 autostart = false
 
@@ -137,15 +138,15 @@ config/pitch_random = 0.0
 
 [node name="LeftCast" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( -8, 8 )
+transform/pos = Vector2( -47, 21 )
 enabled = true
-cast_to = Vector2( -100, 0 )
+cast_to = Vector2( -200, 0 )
 layer_mask = 1
 type_mask = 15
 
 [node name="LeftFootCast" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( -8, 16 )
+transform/pos = Vector2( -50, 30 )
 enabled = true
 cast_to = Vector2( -1, 1 )
 layer_mask = 1
@@ -153,17 +154,25 @@ type_mask = 15
 
 [node name="RightFootCast" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( 8, 16 )
+transform/pos = Vector2( 49, 30 )
 enabled = true
 cast_to = Vector2( 1, 1 )
 layer_mask = 1
 type_mask = 15
 
+[node name="LeftCast2" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( -48, 0 )
+enabled = false
+cast_to = Vector2( -200, 0 )
+layer_mask = 1
+type_mask = 15
+
 [node name="RightCast" type="RayCast2D" parent="."]
 
-transform/pos = Vector2( 8, 8 )
-enabled = true
-cast_to = Vector2( 100, 0 )
+transform/pos = Vector2( 48, 16 )
+enabled = false
+cast_to = Vector2( 200, 0 )
 layer_mask = 1
 type_mask = 15
 

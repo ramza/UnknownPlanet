@@ -10,6 +10,7 @@ onready var state_machine = get_node("EnemyStateMachine")
 onready var sprite = get_node("Sprite")
 onready var timer = get_node("Timer")
 onready var rightcast = get_node("RightCast")
+onready var leftcast2 = get_node("LeftCast2")
 onready var leftcast = get_node("LeftCast")
 onready var left_footcast = get_node("LeftFootCast")
 onready var right_footcast = get_node("RightFootCast")
@@ -70,6 +71,11 @@ func walk_left():
 		var body = leftcast.get_collider()
 		if body != null and body.is_in_group("player"):
 			return true
+	if leftcast2.is_colliding():
+		var body = leftcast2.get_collider()
+		if body != null and body.is_in_group("player"):
+			return true
+			
 	return false
 
 func _fixed_process(delta):
