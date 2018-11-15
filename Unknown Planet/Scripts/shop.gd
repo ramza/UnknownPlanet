@@ -7,6 +7,7 @@ onready var shop_panel = get_node("ShopPanel")
 onready var selector = shop_panel.get_node("selected")
 onready var iteminfo = shop_panel.get_node("ItemInfo")
 onready var timer = get_node("Timer")
+onready var sample_player = get_node("SamplePlayer2D")
 
 var index = 0
 var can_input = true
@@ -46,6 +47,7 @@ func on_shop_body_enter(body):
 		ready_infos()
 		body.disable()
 		shop_panel.show()
+		game_manager.HUD.can_pause = false
 		set_process(true)
 		
 func on_shop_timer_timeout():
@@ -54,6 +56,7 @@ func on_shop_timer_timeout():
 	if finished:
 		game_manager.player.enable()
 		finished = false
+		game_manager.HUD.can_pause = true
 		
 func _process(delta):
 	var right = Input.is_action_pressed("move_right") and can_input
@@ -105,7 +108,7 @@ func do_purchase():
 		if game_manager.cash_money >= 20:
 			game_manager.cash_money -= 20
 			game_manager.gun_upgrade = true
-			game_manager.player.get_node("LaserGun").energy_replenish_delay = 1.0
+			game_manager.player.get_node("LaserGun").energy_replenish_delay = 0.5
 			close_shop()
 		else:
 			infos[1] = "Not enough $"

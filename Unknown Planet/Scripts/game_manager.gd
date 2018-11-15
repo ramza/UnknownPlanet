@@ -6,10 +6,15 @@ extends Node
 
 var player_scene = preload("res://Scenes/player.tscn")
 var player
+var camera
 
 var last_song
 var ship_song = preload("res://Audio/Music/dungeon_vibes.ogg")
-var caves_song = preload("res://Audio/Music/caves.ogg")
+var caves_song = preload("res://Audio/Music/Nebuli.ogg")
+var boss_song = preload("res://Audio/Music/Divide.ogg")
+var tunnels_song = preload("res://Audio/Music/falling_to_earth.ogg")
+var caverns_song = preload("res://Audio/Music/Theme.ogg")
+
 var music_player
 var scenes = [
      "landing_zone",
@@ -23,17 +28,28 @@ var scenes = [
      "tunnels_1",
      "tunnels_2",
      "tunnels_3",
+     "caves_4",
+     "caves_5",
+     "tunnels_4",
+     "temple_1",
+     "temple_2",
+     "temple_3",
+     "base_2",
 ]
 var current_scene_index = 1
 var current_scene
 var prev_scene
 var HUD
 
-var hp_upgrade = false
-var gun_upgrade = false
-var firerate_upgrade = false
+var killed_worm = false
+
+var hp_upgrade = true
+var gun_upgrade = true
+var firerate_upgrade = true
+var speed_boots = true
 
 var blue_card = false
+var red_card = false
 
 var cash_money = 0
 var ammo = 25
@@ -49,31 +65,48 @@ func _ready():
 	print(current_scene.get_name())
 	music_player = global_scene.get_node("StreamPlayer")
 	last_song = caves_song
-	initialize_scene()
+	if current_scene.get_name() != "Title":
+		initialize_scene()
 
 	
 func initialize_scene():
 	HUD = current_scene.get_node("HUD")
+	camera = current_scene.get_node("Camera2D")
 	player = player_scene.instance()
 	player.set_global_pos(current_scene.get_node("SpawnPoint"+str(spawnpoint)).get_global_pos())
 	player.get_node("LaserGun").ammo = ammo
 	if hp_upgrade:
 		player.max_hp += 1
 	if gun_upgrade:
-		player.get_node("LaserGun").energy_replenish_delay = 1.0
+		player.get_node("LaserGun").energy_replenish_delay = 0.5
 	if firerate_upgrade:
 		player.get_node("LaserGun").firerate = 0.15
+	if speed_boots:
+		player.speed_bonus = 1.2
 		
 	current_scene.add_child(player)
 	if ( spawnpoint % 2 == 0):
 		player.flip()
 		
+	handle_music()
+		
 func handle_music():
-	if current_scene_index == 1:
-		music_player.set_stream(ship_song)
-		music_player.play()
-	elif current_scene_index == 0:
-		music_player.set_stream(caves_song)
+	var stream
+	if current_scene.is_in_group("ship"):
+		stream = ship_song
+	elif current_scene.is_in_group("caves"):
+		stream = caves_song
+	elif current_scene.is_in_group("tunnels"):
+		stream = tunnels_song
+	elif current_scene.is_in_group("caverns"):
+		stream = caverns_song
+	elif current_scene.is_in_group("boss"):
+		stream = boss_song
+	elif current_scene.is_in_group("underground_city"):
+		stream = boss_song
+	
+	if(music_player.get_stream() != stream or !music_player.is_playing()):
+		music_player.set_stream(stream)
 		music_player.play()
 
 func save_player_stats():

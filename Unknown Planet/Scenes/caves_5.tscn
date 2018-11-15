@@ -1,0 +1,927 @@
+[gd_scene load_steps=22 format=1]
+
+[ext_resource path="res://Art/megacommando.png" type="Texture" id=1]
+[ext_resource path="res://Other/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=5]
+[ext_resource path="res://Art/torch.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/torch.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/jelly.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/alien.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/spawn.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/ammopack.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/healthpack.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/portal.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/oneway_platform_small.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/oneway_platform.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/coin.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/spikes.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/speed_boots.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/spider.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scenes/water.tscn" type="PackedScene" id=20]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "burn"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.4, 0.8 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[node name="Caves_1" type="Node2D" groups=[
+"caverns",
+]]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="CanvasParallax" type="CanvasLayer" parent="Environment"]
+
+editor/display_folded = true
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Environment/CanvasParallax"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Environment/CanvasParallax/ParallaxBackground"]
+
+motion/scale = Vector2( 0.7, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="Environment/CanvasParallax/ParallaxBackground/ParallaxLayer"]
+
+transform/pos = Vector2( -48, 48 )
+texture = ExtResource( 1 )
+modulate = Color( 0.0245056, 0.0957773, 0.285156, 1 )
+region = true
+region_rect = Rect2( 448, 384, 192, 64 )
+
+[node name="TileMap" type="TileMap" parent="Environment"]
+
+z/z = -1
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -2097142, 17, -2097141, 17, -2097140, 17, -2097139, 17, -2097138, 17, -2097137, 17, -2097136, 17, -2097135, 17, -2097134, 17, -2097133, 17, -2097132, 17, -2097131, 17, -2097130, 17, -2097129, 17, -2097128, 17, -2097127, 17, -2097126, 17, -2097125, 17, -2097124, 17, -2097123, 17, -2097122, 17, -2097121, 17, -1966095, 17, -1966094, 17, -1966093, 17, -1966092, 17, -1966091, 17, -1966090, 17, -1966089, 17, -1966088, 17, -1966087, 17, -1966086, 17, -1966085, 17, -1966084, 17, -1966083, 17, -1966082, 17, -1966081, 17, -2031616, 17, -2031615, 17, -2031614, 17, -2031613, 17, -2031612, 17, -2031611, 17, -2031606, 17, -2031605, 17, -2031604, 17, -2031603, 17, -2031602, 17, -2031601, 62, -2031600, 13, -2031599, 13, -2031598, 62, -2031597, 17, -2031596, 17, -2031595, 17, -2031594, 17, -2031593, 17, -2031592, 17, -2031591, 17, -2031590, 17, -2031589, 17, -2031588, 17, -2031587, 17, -2031586, 17, -2031585, 17, -1900559, 17, -1900558, 17, -1900557, 17, -1900556, 17, -1900555, 17, -1900554, 62, -1900553, 13, -1900552, 13, -1900551, 62, -1900550, 17, -1900549, 17, -1900548, 17, -1900547, 17, -1900546, 17, -1900545, 17, -1966080, 17, -1966079, 17, -1966078, 17, -1966077, 17, -1966076, 17, -1966075, 17, -1966071, 17, -1966070, 17, -1966069, 17, -1966068, 17, -1966067, 62, -1966066, 13, -1966065, 11, -1966062, 12, -1966061, 13, -1966060, 13, -1966059, 13, -1966058, 13, -1966057, 13, -1966056, 13, -1966055, 13, -1966054, 13, -1966053, 13, -1966052, 13, -1835024, 17, -1835023, 17, -1835022, 17, -1835021, 17, -1835020, 62, -1835019, 13, -1835018, 11, -1835015, 12, -1835014, 13, -1835013, 13, -1835012, 13, -1835011, 13, -1835010, 13, -1835009, 13, -1900544, 13, -1900543, 13, -1900542, 13, -1900541, 13, -1900540, 13, -1900539, 13, -1900538, 13, -1900537, 13, -1900536, 13, -1900535, 13, -1900534, 13, -1900533, 13, -1900532, 13, -1900531, 11, -1900515, 10, -1769488, 17, -1769487, 17, -1769486, 17, -1769485, 17, -1769484, 9, -1834999, 17, -1834998, 17, -1834997, 17, -1834979, 10, -1703952, 17, -1703951, 17, -1703950, 17, -1703949, 62, -1703948, 11, -1769443, 10, -1638416, 17, -1638415, 17, -1638414, 17, -1638413, 9, -1703932, 15, -1703931, 16, -1703930, 16, -1703929, 16, -1703928, 16, -1703927, 16, -1703926, 16, -1703925, 16, -1703924, 14, -1703907, 10, -1703906, 17, -1703905, 17, -1572880, 17, -1572879, 17, -1572878, 17, -1572877, 9, -1638396, 10, -1638395, 17, -1638391, 17, -1638390, 17, -1638389, 17, -1638388, 9, -1638371, 10, -1638370, 17, -1638369, 17, -1507344, 17, -1507343, 17, -1507342, 17, -1507341, 9, -1572860, 10, -1572859, 17, -1572855, 17, -1572854, 17, -1572853, 17, -1572852, 9, -1572835, 10, -1572834, 17, -1572833, 17, -1441808, 17, -1441807, 17, -1441806, 17, -1441805, 9, -1507324, 10, -1507323, 17, -1507319, 17, -1507318, 17, -1507317, 17, -1507316, 17, -1507315, 16, -1507314, 16, -1507313, 16, -1507312, 14, -1507299, 10, -1507298, 17, -1507297, 17, -1376272, 17, -1376271, 17, -1376270, 17, -1376269, 17, -1376268, 16, -1376267, 16, -1376266, 16, -1376265, 14, -1441788, 10, -1441787, 17, -1441783, 17, -1441782, 17, -1441781, 17, -1441780, 17, -1441779, 17, -1441778, 17, -1441777, 17, -1441775, 16, -1441774, 14, -1441763, 10, -1441762, 17, -1441761, 17, -1310736, 17, -1310735, 17, -1310734, 17, -1310733, 17, -1310732, 17, -1310731, 17, -1310730, 17, -1310728, 16, -1310727, 14, -1376252, 10, -1376251, 17, -1376247, 17, -1376246, 17, -1376245, 17, -1376244, 17, -1376243, 17, -1376242, 17, -1376241, 17, -1376240, 17, -1376239, 17, -1376238, 9, -1376227, 10, -1376226, 17, -1376225, 17, -1245200, 17, -1245199, 17, -1245198, 17, -1245197, 17, -1245196, 17, -1245195, 17, -1245194, 17, -1245193, 17, -1245192, 17, -1245191, 9, -1310716, 10, -1310715, 17, -1310711, 17, -1310710, 17, -1310709, 17, -1310708, 17, -1310707, 17, -1310706, 17, -1310705, 17, -1310704, 17, -1310703, 62, -1310702, 11, -1310692, 15, -1310691, 17, -1310690, 17, -1310689, 17, -1179664, 17, -1179663, 17, -1179662, 17, -1179661, 17, -1179660, 17, -1179659, 17, -1179658, 17, -1179657, 17, -1179656, 62, -1179655, 11, -1245180, 10, -1245179, 17, -1245175, 17, -1245174, 17, -1245173, 17, -1245172, 17, -1245171, 17, -1245170, 17, -1245169, 17, -1245168, 62, -1245167, 11, -1245156, 10, -1245155, 17, -1245154, 17, -1245153, 17, -1114128, 17, -1114127, 17, -1114126, 17, -1114125, 17, -1114124, 17, -1114123, 17, -1114122, 17, -1114121, 62, -1114120, 11, -1179645, 15, -1179644, 17, -1179643, 17, -1179639, 17, -1179638, 17, -1179637, 17, -1179636, 17, -1179635, 17, -1179634, 17, -1179633, 17, -1179632, 9, -1179620, 10, -1179619, 17, -1179618, 17, -1179617, 17, -1048606, 62, -1048605, 13, -1048604, 13, -1048592, 17, -1048591, 17, -1048590, 17, -1048589, 17, -1048588, 17, -1048587, 17, -1048586, 17, -1048585, 9, -1114109, 10, -1114108, 17, -1114107, 17, -1114103, 17, -1114102, 17, -1114101, 17, -1114100, 17, -1114099, 17, -1114098, 17, -1114097, 62, -1114096, 11, -1114085, 54, -1114084, 17, -1114083, 17, -1114082, 17, -1114081, 17, -983071, 62, -983070, 11, -983067, 12, -983066, 13, -983065, 13, -983064, 13, -983056, 17, -983055, 17, -983054, 17, -983053, 17, -983052, 17, -983051, 17, -983050, 62, -983049, 11, -1048573, 10, -1048572, 17, -1048571, 17, -1048567, 17, -1048566, 17, -1048565, 17, -1048564, 17, -1048563, 62, -1048562, 13, -1048561, 11, -1048551, 54, -1048550, 54, -1048549, 54, -1048548, 17, -1048547, 17, -1048546, 17, -1048545, 17, -917535, 9, -917527, 12, -917520, 17, -917519, 17, -917518, 17, -917517, 17, -917516, 62, -917515, 13, -917514, 11, -983037, 12, -983036, 13, -983035, 13, -983034, 13, -983033, 13, -983032, 13, -983031, 13, -983030, 13, -983029, 13, -983028, 13, -983027, 11, -983013, 10, -983012, 17, -983011, 17, -983010, 17, -983009, 17, -851999, 9, -851990, 12, -851989, 13, -851988, 13, -851987, 13, -851986, 13, -851985, 13, -851984, 13, -851983, 13, -851982, 13, -851981, 13, -851980, 11, -917501, 17, -917500, 17, -917499, 17, -917477, 10, -917476, 17, -917475, 17, -917474, 17, -917473, 17, -786463, 9, -851965, 17, -851964, 17, -851963, 17, -851947, 55, -851945, 57, -851941, 12, -851940, 17, -851939, 17, -851938, 17, -851937, 17, -720927, 9, -720900, 55, -720898, 57, -786429, 17, -786428, 15, -786427, 16, -786426, 16, -786425, 16, -786424, 16, -786423, 16, -786422, 16, -786421, 16, -786420, 16, -786419, 14, -786416, 55, -786404, 10, -786403, 17, -786402, 17, -786401, 17, -655391, 9, -655381, 15, -655380, 16, -655379, 16, -655378, 16, -655377, 16, -655376, 16, -655375, 16, -655374, 16, -655373, 16, -655372, 16, -655371, 16, -655370, 16, -655369, 16, -655368, 16, -655367, 16, -655366, 16, -655365, 16, -655364, 16, -655363, 16, -655362, 16, -655361, 16, -720896, 16, -720895, 16, -720894, 16, -720893, 15, -720892, 17, -720891, 17, -720887, 17, -720886, 17, -720885, 62, -720884, 62, -720883, 9, -720881, 55, -720880, 55, -720868, 10, -720867, 17, -720866, 17, -720865, 17, -589855, 62, -589854, 16, -589853, 16, -589852, 16, -589851, 16, -589850, 16, -589849, 16, -589848, 16, -589847, 16, -589846, 16, -589845, 62, -589840, 17, -589839, 17, -589838, 62, -589837, 62, -589833, 55, -655357, 10, -655356, 17, -655355, 17, -655351, 17, -655350, 17, -655349, 17, -655347, 9, -655346, 54, -655345, 54, -655344, 54, -655343, 54, -655342, 54, -655332, 10, -655331, 17, -655330, 17, -655329, 17, -524304, 17, -524303, 17, -524302, 17, -589821, 10, -589820, 17, -589819, 17, -589815, 17, -589814, 17, -589813, 17, -589812, 62, -589811, 9, -589810, 54, -589797, 15, -589796, 17, -589795, 17, -589794, 17, -589793, 17, -458768, 17, -458767, 17, -458766, 17, -458765, 62, -458763, 13, -458762, 13, -458761, 13, -458760, 13, -458759, 13, -458758, 13, -458757, 13, -458756, 13, -458755, 13, -458754, 13, -458753, 13, -524288, 13, -524287, 13, -524286, 15, -524285, 17, -524284, 17, -524283, 17, -524279, 17, -524278, 17, -524277, 17, -524276, 62, -524275, 11, -524261, 10, -524260, 17, -524259, 17, -524258, 17, -524257, 17, -393232, 17, -393231, 17, -393230, 17, -393228, 11, -458750, 10, -458749, 17, -458748, 17, -458747, 17, -458744, 17, -458743, 17, -458742, 17, -458741, 17, -458740, 9, -458726, 15, -458725, 17, -458724, 17, -458723, 17, -458722, 17, -458721, 17, -327697, 17, -327696, 17, -327695, 17, -327694, 17, -327693, 9, -393215, 15, -393214, 17, -393213, 17, -393212, 17, -393211, 17, -393208, 17, -393207, 17, -393206, 17, -393205, 17, -393204, 9, -393192, 55, -393191, 15, -393190, 17, -393189, 17, -393188, 17, -393187, 17, -393186, 17, -393185, 17, -262161, 17, -262160, 17, -262159, 17, -262158, 17, -262157, 9, -262145, 55, -327680, 15, -327679, 17, -327678, 17, -327677, 17, -327676, 17, -327675, 17, -327672, 17, -327671, 17, -327670, 17, -327669, 62, -327668, 11, -327657, 55, -327656, 55, -327655, 10, -327654, 17, -327653, 17, -327652, 17, -327651, 17, -327650, 17, -327649, 17, -196625, 17, -196624, 17, -196623, 17, -196622, 62, -196621, 11, -196620, 17, -196619, 17, -196618, 17, -196617, 17, -196616, 17, -196615, 17, -196614, 17, -196613, 17, -196612, 17, -196611, 17, -196610, 55, -196609, 55, -262144, 10, -262143, 17, -262142, 17, -262141, 17, -262140, 17, -262139, 17, -262138, 17, -262137, 17, -262136, 17, -262135, 17, -262134, 17, -262133, 9, -262122, 15, -262121, 16, -262120, 16, -262119, 62, -262118, 17, -262117, 17, -262116, 17, -262115, 17, -262114, 17, -262113, 17, -131112, 17, -131111, 17, -131110, 17, -131109, 17, -131108, 17, -131107, 17, -131106, 17, -131105, 17, -131104, 17, -131103, 17, -131102, 17, -131101, 17, -131100, 17, -131099, 17, -131098, 17, -131097, 17, -131096, 17, -131095, 17, -131094, 17, -131093, 17, -131092, 17, -131091, 17, -131090, 17, -131089, 17, -131088, 17, -131087, 17, -131086, 9, -131079, 15, -131078, 16, -131077, 16, -131076, 16, -131075, 16, -131074, 16, -131073, 16, -196608, 62, -196607, 17, -196606, 17, -196605, 17, -196604, 17, -196603, 17, -196602, 17, -196601, 17, -196600, 17, -196599, 17, -196598, 62, -196597, 9, -196586, 10, -196579, 17, -196578, 17, -196577, 17, -65552, 17, -65551, 17, -65550, 9, -65543, 12, -65542, 17, -65541, 17, -65540, 62, -65539, 62, -65538, 13, -65537, 13, -131072, 13, -131071, 13, -131070, 13, -131069, 13, -131068, 13, -131067, 13, -131066, 13, -131065, 13, -131064, 13, -131063, 13, -131062, 13, -131061, 11, -131057, 55, -131051, 15, -131045, 17, -131044, 17, -131043, 17, -131042, 17, -131041, 17, -131040, 17, -131038, 17, -131037, 17, -131036, 17, -131035, 17, -131034, 17, -131033, 17, -131032, 17, -131031, 17, -131030, 17, -131029, 17, -131028, 17, -131027, 17, -131026, 17, -131025, 17, -131024, 17, -131023, 17, -131022, 17, -131021, 17, -131020, 17, -16, 17, -15, 17, -14, 9, -6, 12, -5, 13, -4, 13, -3, 11, -65522, 55, -65521, 55, -65515, 10, -65514, 62, -65509, 17, -65508, 17, -65507, 17, -65506, 17, -65505, 17, -65504, 17, -65485, 17, -65484, 17, 65520, 17, 65521, 62, 65522, 9, 19, 54, 20, 54, 21, 12, 22, 13, 23, 13, 24, 13, 25, 13, 26, 13, 27, 13, 28, 13, 29, 13, 30, 13, 31, 13, 32, 13, 131058, 11, 65552, 55, 65557, 55, 196593, 9, 131090, 55, 131093, 55, 131102, 55, 262129, 9, 196611, 15, 196612, 16, 196613, 16, 196614, 16, 196615, 16, 196616, 16, 196617, 16, 196618, 16, 196619, 16, 196620, 16, 196621, 16, 196622, 16, 196623, 16, 196624, 16, 196625, 16, 196626, 16, 196627, 16, 196628, 16, 196629, 16, 196630, 16, 196631, 16, 196632, 16, 196633, 16, 196634, 16, 196635, 16, 196636, 16, 196637, 16, 196638, 16, 196639, 16, 196640, 16, 327665, 62, 327666, 16, 327667, 16, 327668, 14, 262146, 15, 262147, 17, 262148, 17, 262149, 17, 262164, 17, 262165, 17, 262166, 17, 262167, 17, 262168, 17, 262169, 17, 262170, 17, 262171, 17, 262172, 17, 262173, 17, 262174, 17, 262175, 17, 262176, 17, 393201, 17, 393202, 17, 393203, 17, 393204, 9, 393210, 55, 327681, 15, 327682, 17, 327683, 17, 327684, 17, 327685, 17, 327686, 17, 327700, 17, 327701, 17, 327702, 17, 327703, 17, 327704, 17, 327705, 17, 327706, 17, 327707, 17, 327708, 17, 327709, 17, 327710, 17, 327711, 17, 327712, 17, 458736, 17, 458737, 17, 458738, 17, 458739, 17, 458740, 9, 458745, 57, 458746, 55, 458747, 55, 393216, 15, 393217, 17, 393218, 17, 393219, 17, 393220, 17, 393221, 17, 393222, 17, 393223, 17, 393224, 17, 393227, 17, 393228, 17, 393229, 17, 393230, 17, 393231, 17, 393232, 17, 393233, 17, 393234, 17, 393235, 17, 393236, 17, 393237, 17, 393238, 17, 393239, 17, 393240, 17, 393241, 17, 393242, 17, 393243, 17, 393244, 17, 393245, 17, 393246, 17, 393247, 17, 393248, 17, 524272, 17, 524273, 17, 524274, 17, 524276, 62, 524277, 16, 524278, 16, 524279, 16, 524280, 16, 524281, 16, 524282, 16, 524283, 14, 524286, 15, 524287, 16, 458755, 17, 458756, 17, 458757, 17, 458758, 17, 458759, 17, 458760, 17, 458764, 17, 458765, 17, 458766, 17, 458767, 17, 458768, 17, 458769, 17, 458770, 17, 458771, 17, 458772, 17, 458773, 17, 458774, 17, 458775, 17, 458776, 17, 458777, 17, 458778, 17, 458779, 17, 458780, 17, 458781, 17, 458782, 17, 458783, 17, 458784, 17, 589808, 17, 589809, 17, 589810, 17, 589811, 17, 589812, 17, 589813, 17, 589814, 17, 589815, 17, 589816, 17, 589817, 17, 589818, 17, 589819, 9, 589822, 10, 589823, 17, 524288, 17, 524289, 17, 524290, 17, 524291, 17, 524292, 17, 524293, 17, 524294, 17, 524295, 17, 524296, 17, 524297, 17, 524298, 17, 524299, 17, 524300, 17, 524301, 17, 524302, 17, 524303, 17, 524304, 17, 524305, 17, 524306, 17, 524307, 17, 524308, 17, 524309, 17, 524310, 17, 524311, 17, 524312, 17, 524313, 17, 524314, 17, 524315, 17, 524316, 17, 524317, 17, 524318, 17, 524319, 17, 524320, 17, 655344, 17, 655345, 17, 655346, 17, 655347, 17, 655348, 17, 655349, 17, 655350, 17, 655351, 17, 655352, 17, 655353, 17, 655354, 17, 655355, 9, 655357, 17, 655358, 10, 655359, 17, 589824, 17, 589825, 17, 589826, 17, 589827, 17, 589828, 17, 589829, 17, 589830, 17, 589831, 17, 589832, 17, 589833, 17, 589834, 17, 589835, 17, 589836, 17, 589837, 17, 589838, 17, 589839, 17, 589840, 17, 589841, 17, 589842, 17, 589843, 17, 589844, 17, 589845, 17, 589846, 17, 589847, 17, 589848, 17, 589849, 17, 589850, 17, 589851, 17, 589852, 17, 589853, 17, 589854, 17, 589855, 17, 589856, 17, 720880, 17, 720881, 17, 720882, 17, 720883, 17, 720884, 17, 720885, 17, 720886, 17, 720887, 17, 720888, 17, 720889, 17, 720890, 17, 720891, 68, 720892, 16, 720893, 16, 720894, 67, 720895, 17, 655360, 17, 655361, 17, 655362, 17, 655363, 17, 655364, 17, 655365, 17, 655366, 17, 655367, 17, 655368, 17, 655369, 17, 655370, 17, 655371, 17, 655372, 17, 655373, 17, 655374, 17, 655375, 17, 655376, 17, 655377, 17, 655378, 17, 655379, 17, 655380, 17, 655381, 17, 655382, 17, 655383, 17, 655384, 17, 655385, 17, 655386, 17, 655387, 17, 655388, 17, 655389, 17, 655390, 17, 655391, 17, 655392, 17 )
+
+[node name="Darkness" type="Node" parent="Environment"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Environment/Darkness"]
+
+color = Color( 0, 0, 0, 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( -144, 96 )
+
+[node name="Torches" type="Node2D" parent="."]
+
+[node name="Torch1" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 272, -16 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch1"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch1"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch14" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 0, -208 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.5
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch14"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch14"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch16" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 150.509, -208 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.5
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch16"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch16"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch5" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 29, 13 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch5"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch5"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch6" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -57, 63 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch6"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch6"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch13" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 368, -144 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch13"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch13"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch11" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -432, -192 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch11"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch11"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch12" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -96, -400 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch12"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch12"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch10" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -176, 0 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch10"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch10"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch7" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 320, -174 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.6
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch7"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch7"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch2" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 368, -383 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch2"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch2"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch3" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 184.913, 32.2084 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.5
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch3"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch3"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch4" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 416, -432 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch4"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch4"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -64, -256 )
+scale = 0.3
+
+[node name="Torch 2" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 272, -96 )
+scale = 0.4
+
+[node name="Torch9" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 368, -288 )
+scale = 0.4
+
+[node name="Torch15" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 73.7508, -432.349 )
+scale = 0.4
+
+[node name="Torch17" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 383.384, 29.0256 )
+scale = 0.4
+
+[node name="Torch8" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 256, -416 )
+scale = 0.4
+
+[node name="Torch 3" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -152.776, -210.926 )
+scale = 0.5
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Jelly" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -151.047, -366.051 )
+invincible = false
+damage = 1
+
+[node name="Alien" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 102.87, 21.5402 )
+
+[node name="Spawn" parent="Enemies" instance=ExtResource( 10 )]
+
+[node name="Spawn1" parent="Enemies" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( -252.384, -186.292 )
+
+[node name="Spawn2" parent="Enemies" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( -419.896, -171.702 )
+
+[node name="Spawn3" parent="Enemies" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 129.69, -208.268 )
+
+[node name="Spawn4" parent="Enemies" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 127.474, -430.983 )
+
+[node name="Spawn5" parent="Enemies" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 253.004, 35.5006 )
+
+[node name="Jelly1" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 243.248, -177.329 )
+invincible = false
+damage = 1
+
+[node name="Jelly5" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 237.607, -380.19 )
+invincible = false
+damage = 1
+
+[node name="Jelly2" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -80, 64 )
+invincible = false
+damage = 1
+
+[node name="Jelly3" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -208.768, 45.7483 )
+invincible = false
+damage = 1
+
+[node name="Jelly4" parent="Enemies" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 327.595, 33.9507 )
+invincible = false
+damage = 1
+
+[node name="Pickups" type="Node2D" parent="."]
+
+editor/display_folded = true
+
+[node name="AmmoPickUp1" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -16, 96 )
+
+[node name="AmmoPickUp4" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -174.449, -363.835 )
+
+[node name="AmmoPickUp5" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 166.826, -210.926 )
+
+[node name="AmmoPickUp6" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 422.783, -126.715 )
+
+[node name="AmmoPickUp7" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 420.566, -267.436 )
+
+[node name="AmmoPickUp8" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -74.726, -61.3412 )
+
+[node name="AmmoPickUp3" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -80, -192 )
+
+[node name="AmmoPickUp2" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -128, 96 )
+
+[node name="HealthPack" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -176, 96 )
+
+[node name="HealthPack1" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -23.0909, -64.6653 )
+
+[node name="AmmoPickUp" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -144, 96 )
+
+[node name="AmmoPickUp9" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -89.7062, -62.4492 )
+
+[node name="AmmoPickUp10" parent="Pickups" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( 284.81, -173.253 )
+
+[node name="SpawnPoint1" type="Position2D" parent="."]
+
+transform/pos = Vector2( 388.335, 32.936 )
+
+[node name="SpawnPoint2" type="Position2D" parent="."]
+
+transform/pos = Vector2( 423, 35 )
+
+[node name="Portal1" parent="." instance=ExtResource( 13 )]
+
+transform/pos = Vector2( 448, 32 )
+scene_index = 11
+
+[node name="Platform" type="Node2D" parent="."]
+
+[node name="oneway_platform_small" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 368, -128 )
+
+[node name="oneway_platform_small1" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 288, -192 )
+
+[node name="oneway_platform_small2" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 336, -224 )
+
+[node name="oneway_platform_small3" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 352, -288 )
+
+[node name="oneway_platform_small4" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 320, -320 )
+
+[node name="oneway_platform_small5" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( -64, -352 )
+
+[node name="oneway_platform_small6" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 16, -384 )
+
+[node name="oneway_platform_small7" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( -144, 0 )
+
+[node name="oneway_platform_small10" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( -128, -32 )
+
+[node name="oneway_platform_small9" parent="Platform" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( -128, 64 )
+
+[node name="oneway_platform" parent="Platform" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 336, -384 )
+
+[node name="oneway_platform3" parent="Platform" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( -32, -304 )
+
+[node name="oneway_platform2" parent="Platform" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 0, -240 )
+
+[node name="oneway_platform1" parent="Platform" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 416, -400 )
+
+[node name="oneway_platform4" parent="Platform" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( -167.786, 30.0807 )
+
+[node name="pickups" type="Node2D" parent="."]
+
+[node name="coin2" parent="pickups" instance=ExtResource( 16 )]
+
+transform/pos = Vector2( -47.3782, -60.7642 )
+
+[node name="coin1" parent="pickups" instance=ExtResource( 16 )]
+
+transform/pos = Vector2( 416, -416 )
+
+[node name="Spikes" parent="." instance=ExtResource( 17 )]
+
+transform/pos = Vector2( 432, -288 )
+
+[node name="Spikes1" parent="." instance=ExtResource( 17 )]
+
+transform/pos = Vector2( 256, -176 )
+
+[node name="Spikes2" parent="." instance=ExtResource( 17 )]
+
+transform/pos = Vector2( -48, -192 )
+
+[node name="SpeedBoots" parent="." instance=ExtResource( 18 )]
+
+[node name="Spider" parent="." instance=ExtResource( 19 )]
+
+transform/pos = Vector2( 400, -458 )
+
+[node name="Spider1" parent="." instance=ExtResource( 19 )]
+
+transform/pos = Vector2( 336, -457 )
+
+[node name="Water" parent="." instance=ExtResource( 20 )]
+
+transform/pos = Vector2( -48, 128 )
+
+

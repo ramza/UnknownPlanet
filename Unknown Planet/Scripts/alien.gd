@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 var can_act = true
 var explosion = preload("res://Scenes/small_explosion.tscn")
+var coin = preload("res://Scenes/coin.tscn")
+var ammo = preload("res://Scenes/ammopack.tscn")
 export var hp = 5
 export var damage = 1
 var player 
@@ -38,30 +40,44 @@ var prev_jump_pressed = false
 
 export var overrun = false
 
+var walk_timer = 0
+var walk_delay = 1.5
+
 func take_damage(damage):
 	hp -= damage
 	sample_plyr.play("hurt")
 	if (!overrun):
 		can_act = false
-		
 		timer.start()
 		state_machine.hurt()
+		
 	if hp <= 0:
 		death()
 		
-	
+func drop_item(item):
+	var i = item.instance()
+	i.set_global_pos(get_global_pos())
+	game_manager.current_scene.add_child(i)
+
+
 func death():
 	var new_explosion = explosion.instance()
 	new_explosion.set_pos(self.get_pos())
 	get_parent().add_child(new_explosion)
+	
+	var r = rand_range(0,10)
+	if r < 3:
+		drop_item(coin)
+	elif r < 5:
+		drop_item(ammo)
+	
 	queue_free()
 	
 func walk_right():
 	if rightcast.is_colliding():
-		
 		var body = rightcast.get_collider()
 		#print("hit a " + body.get_name())
-		if body.is_in_group("player"):
+		if body != null and body.is_in_group("player"):
 			return true
 	return false
 	
@@ -73,10 +89,11 @@ func walk_left():
 	return false
 
 func _fixed_process(delta):
+	walk_timer += delta
 	# Create forces
 	var force = Vector2(0, GRAVITY)
 	
-	var walk_left = walk_left()
+	var walk_left = walk_left() 
 	var walk_right = walk_right()
 	var jump = false
 	
@@ -88,13 +105,15 @@ func _fixed_process(delta):
 			stop = false
 			state_machine.walk()
 			sprite.set_scale(Vector2(1,1))
+			walk_timer=0
 	elif (walk_right and can_act and right_footcast.is_colliding()):
 		if (velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED):
 			force.x += WALK_FORCE
 			stop = false
 			state_machine.walk()
 			sprite.set_scale(Vector2(-1,1))
-	if (stop):
+			walk_timer=0
+	if (stop and (!overrun or walk_timer > walk_delay)):
 		var vsign = sign(velocity.x)
 		var vlen = abs(velocity.x)
 		
@@ -172,8 +191,7 @@ func disable():
 	
 func on_enemy_timer_timeout():
 	timer.stop()
-	if state_machine.state != state_machine.STATES.HURT:
-		state_machine.idle()
+	state_machine.idle()
 		
 	can_act = true
 	

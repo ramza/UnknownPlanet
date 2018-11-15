@@ -10,7 +10,12 @@ onready var timer = get_node("Timer")
 onready var ring_timer = get_node("ring_timer")
 onready var sample_player = get_node("SamplePlayer2D")
 export var spawnpoint = 1
+
+export var blue_beacon = false
+
 func _ready():
+	if blue_beacon and !game_manager.killed_worm:
+		queue_free()
 	# Called every time the node is added to the scene.
 	# Initialization here
 	area.connect("body_enter", self, "on_beacon_area_body_enter")

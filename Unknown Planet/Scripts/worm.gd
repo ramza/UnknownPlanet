@@ -1,11 +1,13 @@
 extends KinematicBody2D
 
 var can_act = true
-var explosion = preload("res://Scenes/small_explosion.tscn")
+var explosion = preload("res://Scenes/splat.tscn")
 export var hp = 5
 export var damage = 1
 var player 
 
+onready var area = get_node("Area2D")
+onready var walk_timer = get_node("WalkTimer")
 onready var state_machine = get_node("EnemyStateMachine")
 onready var sprite = get_node("Sprite")
 onready var timer = get_node("Timer")
@@ -39,6 +41,9 @@ var prev_jump_pressed = false
 
 export var overrun = false
 
+var ticktimer = 0
+var run_delay = 2
+
 func take_damage(damage):
 	hp -= damage
 	sample_plyr.play("hurt")
@@ -55,6 +60,8 @@ func death():
 	var new_explosion = explosion.instance()
 	new_explosion.set_pos(self.get_pos())
 	get_parent().add_child(new_explosion)
+	game_manager.killed_worm = true
+	game_manager.camera.shake(2,7,3)
 	queue_free()
 	
 func walk_right():
@@ -79,6 +86,7 @@ func walk_left():
 	return false
 
 func _fixed_process(delta):
+	ticktimer += delta
 	# Create forces
 	var force = Vector2(0, GRAVITY)
 	
@@ -94,13 +102,15 @@ func _fixed_process(delta):
 			stop = false
 			state_machine.walk()
 			sprite.set_scale(Vector2(1,1))
+			ticktimer = 0
 	elif (walk_right and can_act and right_footcast.is_colliding()):
 		if (velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED):
 			force.x += WALK_FORCE
 			stop = false
 			state_machine.walk()
 			sprite.set_scale(Vector2(-1,1))
-	if (stop):
+			ticktimer = 0
+	if (stop and ticktimer > run_delay):
 		var vsign = sign(velocity.x)
 		var vlen = abs(velocity.x)
 		
@@ -109,6 +119,7 @@ func _fixed_process(delta):
 			vlen = 0
 		
 		velocity.x = vlen*vsign
+
 	
 	if velocity.x == 0 and velocity.y == 0:
 		if state_machine.state != state_machine.STATES.HURT:
@@ -183,13 +194,23 @@ func on_enemy_timer_timeout():
 		
 	can_act = true
 	
-func on_body_enter(body):
-	pass
+func on_walk_timer_timeout():
+	if velocity.x != 0:
+		sample_plyr.play("charging")
+
+func on_worm_area_body_enter(body):
+	if body.is_in_group("enemy"):
+		body.take_damage(100)
 	
 func _ready():
+	if game_manager.killed_worm:
+		queue_free()
 	# Called every time the node is added to the scene.
 	# Initialization here
+	area.connect("body_enter", self, "on_worm_area_body_enter")
 	timer.connect("timeout", self, "on_enemy_timer_timeout")
+	walk_timer.connect("timeout", self, "on_walk_timer_timeout")
+	walk_timer.start()
 	state_machine.idle()
 	player = game_manager.player
 	set_fixed_process(true)

@@ -1,0 +1,174 @@
+[gd_scene load_steps=10 format=1]
+
+[ext_resource path="res://Art/megacommando.png" type="Texture" id=1]
+[ext_resource path="res://Other/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/light_panel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=6]
+[ext_resource path="res://Art/light.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/portal.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/lift_trigger.tscn" type="PackedScene" id=9]
+
+[node name="Tunnels_2" type="Node2D" groups=[
+"ladder",
+]]
+
+[node name="Environment" type="Node" parent="."]
+
+editor/display_folded = true
+
+[node name="CanvasParallax" type="CanvasLayer" parent="Environment"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Environment/CanvasParallax"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Environment/CanvasParallax/ParallaxBackground"]
+
+motion/scale = Vector2( 0.7, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="Environment/CanvasParallax/ParallaxBackground/ParallaxLayer"]
+
+visibility/visible = false
+transform/pos = Vector2( 80, 128 )
+texture = ExtResource( 1 )
+modulate = Color( 0.0245056, 0.0957773, 0.285156, 1 )
+region = true
+region_rect = Rect2( 448, 384, 192, 64 )
+
+[node name="TileMap" type="TileMap" parent="Environment"]
+
+z/z = -1
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -196626, 17, -196625, 17, -131091, 17, -131090, 17, -131089, 17, -131087, 17, -131086, 17, -65554, 17, -65553, 17, -65552, 17, -65551, 17, -65550, 17, -65549, 17, -65548, 48, -65547, 47, -65546, 47, -65545, 47, -65544, 47, -65543, 47, -65542, 47, -65541, 47, -65540, 47, -65539, 47, -65538, 47, -65537, 47, -131072, 47, -131071, 47, -131070, 47, -131069, 47, -131068, 47, -131067, 47, -131066, 47, -131065, 49, -19, 17, -18, 17, -17, 17, -16, 17, -15, 17, -14, 17, -13, 17, -12, 45, -9, 58, -5, 58, -2, 58, -65535, 59, -65534, 58, -65533, 59, -65529, 44, 65518, 17, 65519, 17, 65520, 17, 65521, 17, 65522, 17, 65523, 17, 65524, 45, 65527, 58, 65531, 58, 65534, 59, 1, 59, 2, 58, 3, 59, 7, 44, 131051, 42, 131052, 42, 131053, 42, 131054, 42, 131055, 42, 131056, 42, 131057, 42, 131058, 42, 131059, 42, 131060, 42, 131063, 58, 131067, 59, 131070, 58, 65537, 59, 65538, 59, 65539, 59, 65543, 44, 196599, 58, 196603, 58, 196606, 59, 131073, 59, 131074, 58, 131075, 59, 131079, 44, 262135, 58, 262139, 58, 262142, 58, 196609, 59, 196610, 58, 196611, 59, 196615, 44, 327659, 41, 327660, 41, 327661, 41, 327662, 41, 327663, 41, 327664, 41, 327665, 41, 327666, 41, 327667, 41, 327668, 41, 327669, 41, 327670, 41, 327671, 41, 327672, 41, 327673, 41, 327674, 41, 327675, 41, 327676, 41, 327677, 41, 327678, 41, 327679, 41, 262144, 41, 262145, 43, 262147, 46, 262148, 41, 262149, 41, 262150, 41, 262151, 46, 393199, 17, 393200, 17, 393201, 17, 393202, 17, 393203, 17, 327681, 45, 327683, 44, 458734, 17, 458735, 17, 458737, 17, 458738, 17, 393217, 45, 393219, 44, 393256, 17, 393257, 17, 393258, 17, 393259, 17, 393297, 17, 393298, 17, 393299, 17, 393300, 17, 458753, 45, 458755, 44, 524289, 45, 524291, 44, 589825, 45, 589827, 44, 655361, 45, 655363, 44, 720897, 45, 720899, 44, 786433, 45, 786435, 44, 851969, 45, 851971, 44 )
+
+[node name="Darkness" type="Node" parent="Environment"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Environment/Darkness"]
+
+color = Color( 0, 0, 0, 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( -144, 96 )
+
+[node name="Torches" type="Node2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( -3.68323, -8.59418 )
+
+[node name="LightPanel" parent="Torches" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 3.68323, 24.5942 )
+
+[node name="LightPanel2" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -156.317, 40.5942 )
+enabled = true
+editor_only = false
+texture = ExtResource( 6 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/LightPanel2"]
+
+transform/pos = Vector2( 0, -16 )
+texture = ExtResource( 7 )
+
+[node name="LightPanel1" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 83.6832, 40.5942 )
+enabled = true
+editor_only = false
+texture = ExtResource( 6 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/LightPanel1"]
+
+transform/pos = Vector2( 0, -16 )
+texture = ExtResource( 7 )
+
+[node name="SpawnPoint1" type="Position2D" parent="."]
+
+transform/pos = Vector2( -170, 51 )
+
+[node name="SpawnPoint2" type="Position2D" parent="."]
+
+transform/pos = Vector2( 6, 53 )
+
+[node name="Portal" parent="." instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -192, 48 )
+scene_index = 17
+start_position = 2
+needs_red_keycard = false
+
+[node name="LiftTrigger" parent="." instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 40, 55 )
+scene_num = 14
+
+

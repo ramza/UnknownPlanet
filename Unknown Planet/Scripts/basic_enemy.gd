@@ -12,7 +12,7 @@ var coin = preload("res://Scenes/coin.tscn")
 var ammo = preload("res://Scenes/ammopack.tscn")
 
 export var invincible = false
-
+export var damage = 1
 var explosion
 var hp = 3
 var max_hp = 3

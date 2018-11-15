@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Art/healthbar_container.png" type="Texture" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://Art/button.png" type="Texture" id=8]
 [ext_resource path="res://Art/black_screen.png" type="Texture" id=9]
 [ext_resource path="res://Art/blue_card.png" type="Texture" id=10]
+[ext_resource path="res://Art/red_card.png" type="Texture" id=11]
+[ext_resource path="res://Art/speed_boots.png" type="Texture" id=12]
+[ext_resource path="res://Art/map.png" type="Texture" id=13]
 
 [sub_resource type="Animation" id=1]
 
@@ -18,7 +21,7 @@ length = 1.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("Curtain:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -35,7 +38,7 @@ length = 1.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("Curtain:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -47,6 +50,7 @@ tracks/0/keys = {
 
 [node name="HUD" type="CanvasLayer"]
 
+process/pause_mode = 2
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -139,9 +143,10 @@ wait_time = 3.0
 one_shot = false
 autostart = false
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Curtain" type="Sprite" parent="."]
 
 visibility/visible = false
+z/z = 1
 texture = ExtResource( 9 )
 centered = false
 
@@ -159,8 +164,69 @@ autoplay = ""
 
 [node name="BlueCard" type="Sprite" parent="."]
 
-visibility/visible = false
 transform/pos = Vector2( 308, 171 )
 texture = ExtResource( 10 )
+
+[node name="RedCard" type="Sprite" parent="."]
+
+transform/pos = Vector2( 308, 171 )
+texture = ExtResource( 11 )
+
+[node name="SpeedBoots" type="Sprite" parent="."]
+
+transform/pos = Vector2( 308, 154 )
+texture = ExtResource( 12 )
+
+[node name="PauseMenu" type="Panel" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 32.0
+margin/top = 34.0
+margin/right = 96.0
+margin/bottom = 98.0
+
+[node name="QuitButton" type="Button" parent="PauseMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 3.0
+margin/top = 34.0
+margin/right = 40.0
+margin/bottom = 52.0
+custom_fonts/font = ExtResource( 7 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "quit"
+flat = false
+
+[node name="ContinueButton" type="Button" parent="PauseMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 3.0
+margin/top = 10.0
+margin/right = 61.0
+margin/bottom = 28.0
+custom_fonts/font = ExtResource( 7 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "continue"
+flat = false
+
+[node name="Map" type="Sprite" parent="PauseMenu"]
+
+transform/pos = Vector2( 160, 50 )
+transform/scale = Vector2( 0.55, 0.55 )
+texture = ExtResource( 13 )
 
 

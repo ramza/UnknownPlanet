@@ -29,7 +29,7 @@ tracks/0/keys = {
 }
 
 [node name="Tunnels_2" type="Node2D" groups=[
-"ladder",
+"tunnels",
 ]]
 
 [node name="Environment" type="Node" parent="."]
@@ -324,8 +324,6 @@ scale = 0.3
 
 transform/pos = Vector2( 256, 57 )
 scale = 0.6
-min_light = 0.3
-max_light = 1.0
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -333,26 +331,31 @@ max_light = 1.0
 
 transform/pos = Vector2( -19.762, 45.6628 )
 invincible = false
+damage = 1
 
 [node name="Jelly1" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 112, 48 )
 invincible = false
+damage = 1
 
 [node name="Jelly2" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( -80, 48 )
 invincible = false
+damage = 1
 
 [node name="Jelly3" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 448, 48 )
 invincible = false
+damage = 1
 
 [node name="Jelly4" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 304, 48 )
 invincible = false
+damage = 1
 
 [node name="SpawnPoint1" type="Position2D" parent="."]
 

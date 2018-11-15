@@ -37,6 +37,8 @@ var max_hp = 3
 var grounded = false
 var on_ladder = false
 
+var speed_bonus = 1
+
 onready var sprite = get_node("Sprite")
 onready var gun = get_node("LaserGun")
 onready var timer = get_node("Timer")
@@ -51,6 +53,9 @@ func _fixed_process(delta):
 	standard_movement(delta)
 	
 	state_machine.do_animation()
+	
+func set_player_pos(new_pos):
+	set_pos(new_pos)
 	
 func standard_movement(delta):
 		# Create forces
@@ -110,7 +115,7 @@ func standard_movement(delta):
 		steps_timer.steps_on = false
 	
 	# Integrate velocity into motion and move
-	var motion = velocity*delta
+	var motion = velocity*speed_bonus*delta
 	
 	# Move and consume motion
 	motion = move(motion)
@@ -233,12 +238,17 @@ func take_damage(body, dmg):
 	if hp > 0:
 		knockback(body)
 		timer.start()
+		game_manager.camera.shake(0.5,10,5)
 	else:
+		game_manager.camera.shake(2,5,3)
 		death()
 	update_healthbar()
 
 func update_healthbar():
-	game_manager.HUD.update_healthbar(hp/float(max_hp))
+	var _hp = hp/float(max_hp)
+	if _hp < 0:
+		_hp = 0
+	game_manager.HUD.update_healthbar(_hp)
 	
 func on_player_timer_timerout():
 	timer.stop()
@@ -262,7 +272,7 @@ func flip():
 	
 func on_player_body_enter(body):
 	if body.is_in_group("enemy"):
-		take_damage(body, 1)
+		take_damage(body, body.damage)
 		if hp > 0:
 			body.contact()
 		else:

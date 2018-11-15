@@ -1,0 +1,615 @@
+[gd_scene load_steps=20 format=1]
+
+[ext_resource path="res://Art/megacommando.png" type="Texture" id=1]
+[ext_resource path="res://Other/tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Art/lightmap.tex" type="Texture" id=5]
+[ext_resource path="res://Art/torch.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/torch.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/light_panel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/jelly.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/alien.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/spikes.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/ammopack.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/healthpack.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/coin.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/portal.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/breakable_brick.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/lift_trigger.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/oneway_platform_small.tscn" type="PackedScene" id=18]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "burn"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.4, 0.8 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[node name="Temple_1" type="Node2D" groups=[
+"temple",
+]]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="CanvasParallax" type="CanvasLayer" parent="Environment"]
+
+editor/display_folded = true
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Environment/CanvasParallax"]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+scroll/offset = Vector2( 0, 0 )
+scroll/base_offset = Vector2( 0, 0 )
+scroll/base_scale = Vector2( 1, 1 )
+scroll/limit_begin = Vector2( 0, 0 )
+scroll/limit_end = Vector2( 0, 0 )
+scroll/ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Environment/CanvasParallax/ParallaxBackground"]
+
+motion/scale = Vector2( 0.7, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="Environment/CanvasParallax/ParallaxBackground/ParallaxLayer"]
+
+transform/pos = Vector2( -48, 48 )
+texture = ExtResource( 1 )
+modulate = Color( 0.0245056, 0.0957773, 0.285156, 1 )
+region = true
+region_rect = Rect2( 448, 384, 192, 64 )
+
+[node name="TileMap" type="TileMap" parent="Environment"]
+
+mode = 0
+tile_set = ExtResource( 2 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -196624, 50, -196623, 50, -196622, 50, -196621, 50, -196620, 50, -196619, 50, -196618, 50, -196617, 50, -196616, 50, -196615, 50, -196614, 50, -196612, 50, -196611, 50, -196610, 50, -196609, 50, -262144, 50, -262143, 50, -262142, 50, -262141, 50, -262140, 50, -262139, 50, -262138, 50, -262137, 50, -262136, 50, -131088, 50, -131087, 50, -131086, 50, -131085, 50, -131084, 50, -131083, 50, -131082, 50, -131081, 50, -131080, 50, -131079, 50, -131078, 50, -131076, 50, -131075, 50, -131074, 50, -131073, 50, -196608, 50, -196607, 50, -196606, 50, -196605, 50, -196604, 50, -196603, 50, -196602, 50, -196601, 50, -196600, 50, -65552, 50, -65551, 50, -65550, 50, -65549, 44, -65548, 50, -65547, 50, -65546, 50, -65545, 50, -65544, 50, -65543, 50, -65542, 50, -65540, 50, -65539, 50, -65538, 50, -65537, 50, -131072, 50, -131071, 50, -131070, 50, -131069, 50, -131068, 50, -131067, 50, -131066, 50, -131065, 44, -16, 50, -15, 50, -14, 44, -13, 44, -65532, 50, -65531, 50, -65530, 50, -65529, 44, 65520, 50, 65521, 50, 65522, 44, 65523, 44, 4, 50, 5, 50, 6, 50, 7, 44, 131056, 50, 131057, 50, 131058, 44, 131059, 44, 131061, 94, 65540, 50, 65541, 50, 65542, 50, 65543, 44, 196592, 50, 196593, 50, 196594, 44, 196595, 44, 131076, 50, 131077, 50, 131078, 50, 131079, 50, 262128, 50, 262129, 50, 262130, 44, 262131, 44, 196612, 50, 196613, 50, 196614, 50, 196615, 50, 327664, 50, 327665, 50, 327666, 44, 327667, 44, 327671, 50, 327672, 50, 327673, 50, 327674, 50, 327675, 50, 327676, 50, 327677, 50, 327678, 50, 327679, 50, 262144, 50, 262148, 50, 262149, 50, 262150, 50, 262151, 50, 393200, 50, 393201, 50, 393202, 44, 393203, 44, 327684, 44, 327685, 50, 327686, 50, 327687, 50, 458736, 50, 458737, 50, 458738, 44, 458739, 44, 458740, 50, 393220, 44, 393221, 50, 393222, 50, 393224, 50, 524272, 50, 524273, 50, 524274, 50, 524275, 44, 524276, 50, 524277, 50, 458753, 50, 458754, 50, 458755, 50, 458756, 44, 458757, 50, 458758, 50, 458759, 50, 458760, 50, 589808, 50, 589809, 50, 589810, 50, 589811, 50, 589812, 50, 589813, 50, 589814, 50, 589815, 50, 589821, 50, 589822, 50, 589823, 50, 524288, 50, 524289, 44, 524290, 50, 524291, 50, 524292, 50, 524293, 50, 524294, 50, 524296, 50, 655344, 50, 655345, 50, 655346, 50, 655347, 50, 655348, 50, 655349, 50, 655350, 50, 655351, 50, 655357, 50, 655358, 50, 655359, 50, 589824, 44, 589825, 50, 589826, 50, 589827, 50, 589828, 50, 589829, 50, 589830, 50, 589831, 50, 589832, 50, 720880, 50, 720881, 50, 720882, 50, 720883, 50, 720884, 50, 720885, 50, 720886, 50, 720887, 50, 720893, 50, 720894, 50, 720895, 50, 655360, 50, 655361, 44, 655362, 50, 655363, 50, 655364, 50, 655365, 50, 655366, 50, 655367, 50, 655368, 50, 786419, 45, 786420, 50, 786421, 50, 786422, 50, 786423, 50, 786429, 50, 786430, 50, 786431, 50, 720897, 44, 851955, 45, 786433, 44, 917491, 45, 851969, 44, 983027, 45, 917505, 44, 1048563, 45, 1048574, 42, 1048575, 42, 983040, 42, 983041, 42, 1114099, 45, 1048577, 44, 1179635, 42, 1179636, 42, 1179637, 42, 1114113, 44, 1245171, 45, 1179649, 44, 1310707, 45, 1245185, 44, 1376243, 45, 1310721, 44, 1441779, 45, 1376257, 44, 1507315, 45, 1441793, 44, 1572851, 45, 1507329, 50, 1638387, 45, 1572865, 44, 1703923, 45, 1638401, 44, 1769459, 45, 1769460, 41, 1769461, 41, 1769462, 41, 1769463, 41, 1769470, 42, 1769471, 42, 1703936, 42, 1703937, 42, 1834995, 45, 1769473, 44, 1900531, 42, 1900532, 42, 1900533, 42, 1835009, 44, 1966067, 45, 1900545, 44, 2031603, 45, 1966081, 44, 2097139, 45, 2031617, 44, 2162675, 45, 2097153, 44, 2228211, 45, 2228222, 42, 2228223, 42, 2162688, 42, 2162689, 42, 2293747, 45, 2293758, 50, 2293759, 50, 2228224, 50, 2228225, 44, 2359283, 42, 2359284, 42, 2359285, 42, 2359286, 42, 2293760, 50, 2293761, 44, 2424819, 45, 2424820, 50, 2424821, 50, 2424822, 42, 2359297, 44, 2490355, 45, 2490356, 50, 2490357, 50, 2490358, 42, 2424833, 44, 2555888, 17, 2555889, 17, 2555890, 17, 2555891, 45, 2555894, 42, 2490369, 44, 2490370, 17, 2490371, 17, 2490372, 17, 2621424, 17, 2621425, 17, 2621426, 17, 2621427, 45, 2621430, 42, 2555905, 44, 2555906, 17, 2555907, 17, 2555908, 17, 2686960, 17, 2686961, 17, 2686962, 17, 2686963, 45, 2686966, 42, 2621441, 44, 2621442, 17, 2621443, 17, 2621444, 17, 2752496, 17, 2752497, 17, 2752498, 17, 2752499, 45, 2686977, 44, 2686978, 17, 2686979, 17, 2686980, 17, 2818027, 47, 2818028, 47, 2818029, 47, 2818030, 47, 2818031, 47, 2818032, 47, 2818033, 47, 2818034, 47, 2818035, 45, 2818036, 42, 2818037, 42, 2818038, 42, 2818039, 42, 2752513, 44, 2752514, 47, 2752515, 47, 2752516, 47, 2752517, 47, 2752518, 47, 2752519, 47, 2752520, 47, 2752521, 47, 2752522, 47, 2752523, 47, 2752524, 47, 3014635, 41, 3014636, 41, 3014637, 41, 3014638, 41, 3014639, 41, 3014640, 41, 3014641, 41, 3014642, 41, 3014643, 41, 3014644, 41, 3014645, 41, 3014646, 41, 3014647, 41, 3014648, 41, 3014649, 41, 3014650, 41, 3014651, 41, 3014652, 41, 3014653, 41, 3014654, 41, 3014655, 41, 2949120, 41, 2949121, 41, 2949122, 41, 2949123, 41, 2949124, 41, 2949125, 41, 2949126, 41, 2949127, 41, 2949128, 41, 2949129, 41, 2949130, 41, 2949131, 41, 2949132, 41, 2949133, 41 )
+
+[node name="Darkness" type="Node" parent="Environment"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Environment/Darkness"]
+
+color = Color( 0, 0, 0, 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( -144, 96 )
+x_lock = true
+
+[node name="Torches" type="Node2D" parent="."]
+
+[node name="Torch1" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -80, 112 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch1"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch1"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch5" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 29, 13 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch5"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch5"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch6" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -57, 63 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch6"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch6"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch7" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -192, 32 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch7"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch7"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch2" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -144, 352 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch2"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch2"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch3" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( 0, 384 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch3"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch3"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch4" type="Light2D" parent="Torches"]
+
+editor/display_folded = true
+transform/pos = Vector2( -144, 224 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+scale = 0.3
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="Sprite" type="Sprite" parent="Torches/Torch4"]
+
+texture = ExtResource( 6 )
+vframes = 2
+hframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch4"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/burn = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "burn"
+
+[node name="Torch" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -128, 48 )
+scale = 0.3
+
+[node name="Torch9" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -74, -12 )
+scale = 0.3
+
+[node name="Torch 2" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -64, 272 )
+scale = 0.4
+min_light = 0.2
+max_light = 0.7
+
+[node name="Torch8" parent="Torches" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( -112, 304 )
+scale = 0.4
+min_light = 0.1
+max_light = 0.5
+
+[node name="LightPanel" parent="Torches" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -128, 496 )
+
+[node name="LightPanel1" parent="Torches" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( -48, 624 )
+
+[node name="LightPanel2" parent="Torches" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 0, 688 )
+scale = 0.4
+
+[node name="Enemies" type="Node2D" parent="."]
+
+editor/display_folded = true
+
+[node name="Jelly" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 48, 96 )
+invincible = false
+damage = 1
+
+[node name="Alien" parent="Enemies" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( -176, 400 )
+
+[node name="Jelly1" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 0, 48 )
+invincible = false
+damage = 1
+
+[node name="Jelly2" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( -112, 48 )
+invincible = false
+damage = 1
+
+[node name="Jelly3" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( -48, 400 )
+invincible = false
+damage = 1
+
+[node name="Jelly4" parent="Enemies" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( -16, 224 )
+invincible = false
+damage = 1
+
+[node name="Spikes" parent="Enemies" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -176, 256 )
+
+[node name="Spikes1" parent="Enemies" instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -32, 112 )
+
+[node name="Pickups" type="Node2D" parent="."]
+
+editor/display_folded = true
+
+[node name="AmmoPickUp1" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -144, 118 )
+
+[node name="AmmoPickUp2" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -167, 101 )
+
+[node name="AmmoPickUp3" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( 5.00015, 102 )
+
+[node name="AmmoPickUp5" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -80, 162 )
+
+[node name="AmmoPickUp4" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -96, 208 )
+
+[node name="HealthPack" parent="Pickups" instance=ExtResource( 13 )]
+
+transform/pos = Vector2( 2, 227 )
+
+[node name="AmmoPickUp" parent="Pickups" instance=ExtResource( 12 )]
+
+transform/pos = Vector2( -144, 352 )
+
+[node name="coin1" parent="Pickups" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 296, 120 )
+
+[node name="SpawnPoint1" type="Position2D" parent="."]
+
+transform/pos = Vector2( -72, 48 )
+
+[node name="SpawnPoint2" type="Position2D" parent="."]
+
+transform/pos = Vector2( 576, 32 )
+
+[node name="Portal" parent="." instance=ExtResource( 15 )]
+
+transform/pos = Vector2( -224, 704 )
+scene_index = 16
+start_position = 2
+needs_red_keycard = false
+
+[node name="Portal1" parent="." instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 48, 704 )
+scene_index = 15
+needs_red_keycard = false
+
+[node name="BreakableBrick" parent="." instance=ExtResource( 16 )]
+
+transform/pos = Vector2( -160, 656 )
+
+[node name="LiftTrigger" parent="." instance=ExtResource( 17 )]
+
+transform/pos = Vector2( -72, 13 )
+scene_num = 13
+go_down = false
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="oneway_platform_small" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -80, 176 )
+
+[node name="oneway_platform_small7 7" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -64, 480 )
+
+[node name="oneway_platform_small1" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -112, 144 )
+
+[node name="oneway_platform_small7 2" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -96, 448 )
+
+[node name="oneway_platform_small2" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -96, 224 )
+
+[node name="oneway_platform_small7" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -80, 528 )
+
+[node name="oneway_platform_small3" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -64, 288 )
+
+[node name="oneway_platform_small7 5" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -128, 576 )
+
+[node name="oneway_platform_small4" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -112, 320 )
+
+[node name="oneway_platform_small7 4" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -80, 608 )
+
+[node name="oneway_platform_small5" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -144, 368 )
+
+[node name="oneway_platform_small7 6" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -96, 656 )
+
+[node name="oneway_platform_small6" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -64, 384 )
+
+[node name="oneway_platform_small7 3" parent="Platforms" instance=ExtResource( 18 )]
+
+transform/pos = Vector2( -48, 688 )
+
+

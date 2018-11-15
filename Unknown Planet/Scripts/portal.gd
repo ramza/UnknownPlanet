@@ -11,6 +11,7 @@ onready var timer = get_node("Timer")
 var done = false
 
 export var needs_keycard = false
+export var needs_red_keycard = false
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -24,13 +25,15 @@ func on_portal_timer_timeout():
 	sample_player.play("open")
 
 func on_portal_anim_finished():
-	if done:
+	if done and game_manager.player.hp > 0:
 		game_manager.goto_scene("res://Scenes/"+game_manager.scenes[scene_index]+".tscn")
 		
 
 func on_portal_body_enter(body):
 	if body.is_in_group("player"):
 		if needs_keycard and !game_manager.blue_card:
+			return
+		elif needs_red_keycard and !game_manager.red_card:
 			return
 		body.disable()
 		timer.start()
