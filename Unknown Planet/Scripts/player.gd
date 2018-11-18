@@ -239,8 +239,9 @@ func take_damage(body, dmg):
 		knockback(body)
 		timer.start()
 		game_manager.camera.shake(0.5,10,5)
-	else:
+	elif not game_manager.game_over:
 		game_manager.camera.shake(2,5,3)
+		game_manager.game_over = true
 		death()
 	update_healthbar()
 

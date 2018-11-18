@@ -7,6 +7,7 @@ extends Node
 var player_scene = preload("res://Scenes/player.tscn")
 var player
 var camera
+var game_over = false
 
 var last_song
 var ship_song = preload("res://Audio/Music/dungeon_vibes.ogg")
@@ -14,6 +15,7 @@ var caves_song = preload("res://Audio/Music/Nebuli.ogg")
 var boss_song = preload("res://Audio/Music/Divide.ogg")
 var tunnels_song = preload("res://Audio/Music/falling_to_earth.ogg")
 var caverns_song = preload("res://Audio/Music/Theme.ogg")
+var temple_song = preload("res://Audio/Music/Questitude.ogg")
 
 var music_player
 var scenes = [
@@ -35,6 +37,9 @@ var scenes = [
      "temple_2",
      "temple_3",
      "base_2",
+     "temple_5",
+     "temple_boss",
+     "temple_4",
 ]
 var current_scene_index = 1
 var current_scene
@@ -102,8 +107,8 @@ func handle_music():
 		stream = caverns_song
 	elif current_scene.is_in_group("boss"):
 		stream = boss_song
-	elif current_scene.is_in_group("underground_city"):
-		stream = boss_song
+	elif current_scene.is_in_group("temple"):
+		stream = temple_song
 	
 	if(music_player.get_stream() != stream or !music_player.is_playing()):
 		music_player.set_stream(stream)

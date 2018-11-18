@@ -477,11 +477,13 @@ transform/pos = Vector2( 642, 32 )
 
 transform/pos = Vector2( -240, 48 )
 scene_index = 8
+needs_red_keycard = false
 
 [node name="Portal1" parent="." instance=ExtResource( 13 )]
 
 transform/pos = Vector2( 672, 32 )
 start_position = 3
+needs_red_keycard = false
 
 [node name="Spikes" parent="." instance=ExtResource( 14 )]
 

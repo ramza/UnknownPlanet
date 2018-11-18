@@ -11,7 +11,7 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_action_pressed("ui_accept") or Input.is_action_pressed("start"):
 		game_manager.goto_scene("res://Scenes/"+game_manager.scenes[1]+".tscn")
 		
 		

@@ -443,8 +443,6 @@ scale = 0.4
 
 [node name="Enemies" type="Node2D" parent="."]
 
-editor/display_folded = true
-
 [node name="Jelly" parent="Enemies" instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 48, 96 )
@@ -469,7 +467,7 @@ damage = 1
 
 [node name="Jelly3" parent="Enemies" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( -48, 400 )
+transform/pos = Vector2( -96, 672 )
 invincible = false
 damage = 1
 
@@ -529,7 +527,7 @@ transform/pos = Vector2( -72, 48 )
 
 [node name="SpawnPoint2" type="Position2D" parent="."]
 
-transform/pos = Vector2( 576, 32 )
+transform/pos = Vector2( 20, 707 )
 
 [node name="Portal" parent="." instance=ExtResource( 15 )]
 

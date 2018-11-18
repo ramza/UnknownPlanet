@@ -105,8 +105,8 @@ samples/hurt = {
 "sample": ExtResource( 12 )
 }
 
-[node name="Caves_1" type="Node2D" groups=[
-"caves",
+[node name="Temple_2" type="Node2D" groups=[
+"temple",
 ]]
 
 [node name="Environment" type="Node" parent="."]
@@ -775,13 +775,14 @@ transform/pos = Vector2( 1459, 34 )
 [node name="Portal" parent="." instance=ExtResource( 20 )]
 
 transform/pos = Vector2( -240, 48 )
+scene_index = 14
 start_position = 2
 needs_red_keycard = false
 
 [node name="Portal1" parent="." instance=ExtResource( 20 )]
 
 transform/pos = Vector2( 1488, 32 )
-scene_index = 3
+scene_index = 18
 needs_red_keycard = false
 
 [node name="BreakableBrick" parent="." instance=ExtResource( 21 )]

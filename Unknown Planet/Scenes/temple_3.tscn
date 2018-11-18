@@ -36,8 +36,8 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[node name="Caves_1" type="Node2D" groups=[
-"caves",
+[node name="Temple_3" type="Node2D" groups=[
+"temple",
 ]]
 
 [node name="Environment" type="Node" parent="."]
@@ -86,6 +86,7 @@ region_rect = Rect2( 0, 800.5, 257, 217 )
 
 [node name="TileMap" type="TileMap" parent="Environment"]
 
+z/z = -1
 mode = 0
 tile_set = ExtResource( 2 )
 cell/size = Vector2( 16, 16 )
@@ -555,7 +556,7 @@ transform/pos = Vector2( 1040, 32 )
 
 [node name="Spikes" parent="Enemies" instance=ExtResource( 12 )]
 
-transform/pos = Vector2( -112, 48 )
+transform/pos = Vector2( -80, 48 )
 
 [node name="Spikes1" parent="Enemies" instance=ExtResource( 12 )]
 
@@ -606,13 +607,14 @@ transform/pos = Vector2( 1456, 32 )
 [node name="Portal" parent="." instance=ExtResource( 16 )]
 
 transform/pos = Vector2( -240, 48 )
+scene_index = 20
 start_position = 2
 needs_red_keycard = false
 
 [node name="Portal1" parent="." instance=ExtResource( 16 )]
 
 transform/pos = Vector2( 1488, 32 )
-scene_index = 3
+scene_index = 18
 needs_red_keycard = false
 
 [node name="BreakableBrick" parent="." instance=ExtResource( 17 )]

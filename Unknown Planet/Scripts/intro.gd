@@ -28,7 +28,7 @@ func display_current_messege():
 	index+=1
 		
 func _process(delta):
-	if can_continue and Input.is_action_pressed("ui_accept"):
+	if can_continue and (Input.is_action_pressed("ui_accept")):
 		if index > messeges.size()-1:
 			set_process(false)
 			index = 0

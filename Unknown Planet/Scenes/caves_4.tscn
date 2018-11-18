@@ -712,11 +712,13 @@ transform/pos = Vector2( 423, 35 )
 transform/pos = Vector2( -240, 48 )
 scene_index = 12
 start_position = 2
+needs_red_keycard = false
 
 [node name="Portal1" parent="." instance=ExtResource( 12 )]
 
 transform/pos = Vector2( 448, 32 )
 scene_index = 8
+needs_red_keycard = false
 
 [node name="Platform" type="Node2D" parent="."]
 
