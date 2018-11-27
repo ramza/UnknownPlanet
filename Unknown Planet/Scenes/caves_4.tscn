@@ -41,8 +41,6 @@ tracks/0/keys = {
 
 [node name="Environment" type="Node" parent="."]
 
-editor/display_folded = true
-
 [node name="CanvasParallax" type="CanvasLayer" parent="Environment"]
 
 editor/display_folded = true
@@ -681,8 +679,6 @@ damage = 1
 
 [node name="Pickups" type="Node2D" parent="."]
 
-editor/display_folded = true
-
 [node name="AmmoPickUp1" parent="Pickups" instance=ExtResource( 10 )]
 
 transform/pos = Vector2( -16, 96 )
@@ -712,13 +708,11 @@ transform/pos = Vector2( 423, 35 )
 transform/pos = Vector2( -240, 48 )
 scene_index = 12
 start_position = 2
-needs_red_keycard = false
 
 [node name="Portal1" parent="." instance=ExtResource( 12 )]
 
 transform/pos = Vector2( 448, 32 )
 scene_index = 8
-needs_red_keycard = false
 
 [node name="Platform" type="Node2D" parent="."]
 
@@ -780,13 +774,25 @@ transform/pos = Vector2( 416, -400 )
 
 transform/pos = Vector2( 631, -80 )
 
+[node name="coin3" parent="pickups" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 617, -80 )
+
 [node name="coin1" parent="pickups" instance=ExtResource( 15 )]
 
 transform/pos = Vector2( -122, -186 )
 
+[node name="coin4" parent="pickups" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( -108, -186 )
+
 [node name="coin2" parent="pickups" instance=ExtResource( 15 )]
 
 transform/pos = Vector2( 768, -425 )
+
+[node name="coin5" parent="pickups" instance=ExtResource( 15 )]
+
+transform/pos = Vector2( 218, -375 )
 
 [node name="Spikes" parent="." instance=ExtResource( 16 )]
 

@@ -26,7 +26,7 @@ func _ready():
 	
 func start_camera(target):
 	# window maximized, comment this line code if you don't want to automatically maximized
-	OS.set_window_maximized(true)
+
 	target_node = game_manager.player
 	var pos = target_node.get_pos()
 	# forcing set the position into character position

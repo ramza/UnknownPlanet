@@ -146,6 +146,7 @@ autostart = false
 
 [node name="EnemyStateMachine" type="Node" parent="."]
 
+editor/display_folded = true
 script/script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyStateMachine"]
@@ -182,6 +183,14 @@ cast_to = Vector2( -200, 0 )
 layer_mask = 1
 type_mask = 15
 
+[node name="LeftCast1" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( -10, -15 )
+enabled = true
+cast_to = Vector2( -200, 0 )
+layer_mask = 1
+type_mask = 15
+
 [node name="LeftFootCast" type="RayCast2D" parent="."]
 
 transform/pos = Vector2( -10, 46 )
@@ -201,6 +210,14 @@ type_mask = 15
 [node name="RightCast" type="RayCast2D" parent="."]
 
 transform/pos = Vector2( 10, 38 )
+enabled = true
+cast_to = Vector2( 200, 0 )
+layer_mask = 1
+type_mask = 15
+
+[node name="RightCast1" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( 10, -15 )
 enabled = true
 cast_to = Vector2( 200, 0 )
 layer_mask = 1

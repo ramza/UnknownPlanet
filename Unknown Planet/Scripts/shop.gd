@@ -22,14 +22,30 @@ var infos = [
 ]
 var start_pos
 
+func reset_infos():
+	infos = [
+	"Increase Health $10",
+	"Max charge $20",
+	"Rapid Fire $20",
+    ]
+
 func ready_infos():
 	if game_manager.hp_upgrade:
-		infos[0] = "Already purchased"
+		if game_manager.hp_upgrade2:
+			infos[0] = "Already purchased"
+		else:
+			infos[0] = "Increase Health 2 $10"
 	if game_manager.gun_upgrade:
-		infos[1] = "Already purchased"
+		if game_manager.gun_upgrade2:
+			infos[1] = "Already purchased"
+		else:
+			infos[1] = "Max charge 2 $20"
 	if game_manager.firerate_upgrade:
-		infos[2] = "Already purchased"
-		
+		if game_manager.firerate_upgrade2:
+			infos[2] = "Already purchased"
+		else:
+			infos[2] = "Rapid Fire 2 $20"
+			
 	iteminfo.set_text("")
 	
 func _ready():
@@ -66,7 +82,7 @@ func _process(delta):
 	if cancel:
 		close_shop()
 		
-	var select = Input.is_action_pressed("ui_accept") and can_input
+	var select = (Input.is_action_pressed("ui_accept") or Input.is_action_pressed("start")) and can_input
 	
 	if right:
 		index += 1
@@ -79,6 +95,7 @@ func _process(delta):
 		index = 0
 	
 	if left or right:
+		sample_player.play("select")
 		can_input = false
 		check_out = false
 		timer.start()
@@ -95,32 +112,50 @@ func _process(delta):
 
 func do_purchase():
 	check_out = false
-	if index == 0 and !game_manager.hp_upgrade:
+	if index == 0 and (!game_manager.hp_upgrade2):
 		if game_manager.cash_money >= 10:
 			game_manager.cash_money -= 10
-			game_manager.hp_upgrade = true
 			game_manager.player.max_hp += 1
+			sample_player.play("coin")
+			if game_manager.hp_upgrade:
+				game_manager.hp_upgrade2 = true
+			else:
+				game_manager.hp_upgrade = true
 			close_shop()
 		else:
 			infos[0] = "Not enough $"
 
-	elif index == 1 and !game_manager.gun_upgrade:
+	elif index == 1 and !game_manager.gun_upgrade2:
 		if game_manager.cash_money >= 20:
 			game_manager.cash_money -= 20
-			game_manager.gun_upgrade = true
-			game_manager.player.get_node("LaserGun").energy_replenish_delay = 0.5
+			sample_player.play("coin")
+			var rate = 0.0
+			if game_manager.gun_upgrade:
+				game_manager.gun_upgrade2 = true
+				rate = 0.25
+			else:
+				game_manager.gun_upgrade = true
+				rate = 0.5
+			game_manager.player.get_node("LaserGun").energy_replenish_delay = rate
 			close_shop()
 		else:
 			infos[1] = "Not enough $"
 	
-	elif index == 2 and !game_manager.firerate_upgrade:
+	elif index == 2 and !game_manager.firerate_upgrade2:
 		if game_manager.cash_money >= 20:
 			game_manager.cash_money -= 20
-			game_manager.firerate_upgrade = true
-			game_manager.player.get_node("LaserGun").firerate = 0.15
+			var rate = 0.0
+			sample_player.play("coin")
+			if game_manager.firerate_upgrade:
+				game_manager.firerate_upgrade2 = true
+				rate = 0.1
+			else:
+				game_manager.firerate_upgrade = true
+				rate = 0.15
+			game_manager.player.get_node("LaserGun").firerate = rate
 			close_shop()
 		else:
-			infos[1] = "Not enough $"
+			infos[2] = "Not enough $"
 	
 	
 func close_shop():
@@ -131,5 +166,6 @@ func close_shop():
 	finished = true
 	timer.start()
 	iteminfo.set_text(" ")
+	reset_infos()
 	
 		

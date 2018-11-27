@@ -29,6 +29,8 @@ var velocity = Vector2(0,0)
 var on_air_time = 100
 var prev_jump_pressed = false
 
+var overlapping_body
+
 var can_act = true
 var facing_dir = 1
 var gun_distance = 8
@@ -48,6 +50,7 @@ onready var raycast = get_node("RayCast2D")
 onready var leftCast = get_node("LeftCast")
 onready var rightCast = get_node("RightCast")
 onready var steps_timer= get_node("Steps_Timer")
+onready var immune_timer = get_node("ImmunityTimer")
 
 func _fixed_process(delta):
 	standard_movement(delta)
@@ -86,14 +89,14 @@ func standard_movement(delta):
 	if jumping and jump and on_air_time < 0.3:
 		velocity.y -= JUMP_BONUS
 		
-	if grounded and !walk_right and !walk_left and not state_machine.state == state_machine.STATES.HURT and can_act:
+	if grounded and !walk_right and !walk_left and not state_machine.state == state_machine.STATES.HURT and can_act and state_machine.state != state_machine.STATES.DEAD:
 		if Input.is_action_pressed("fire"):
 			state_machine.shoot()
 		else:
 			state_machine.idle()
 			steps_timer.steps_on = false
 	elif walk_left or walk_right:
-		if ( state_machine.state != state_machine.STATES.JUMP and state_machine.state != state_machine.STATES.FALL):
+		if ( state_machine.state != state_machine.STATES.DEAD and state_machine.state != state_machine.STATES.JUMP and state_machine.state != state_machine.STATES.FALL):
 				state_machine.walk()
 				steps_timer.steps_on = true
 	
@@ -133,7 +136,7 @@ func standard_movement(delta):
 		if (rad2deg(acos(n.dot(Vector2(0, -1)))) < FLOOR_ANGLE_TOLERANCE):
 			# If angle to the "up" vectors is < angle tolerance
 			# char is on floor
-			if state_machine.state == state_machine.STATES.JUMP or state_machine.state == state_machine.STATES.FALL:
+			if state_machine.state != state_machine.STATES.DEAD and state_machine.state == state_machine.STATES.JUMP or state_machine.state == state_machine.STATES.FALL:
 				state_machine.idle()
 			
 			if !grounded and !leftCast.is_colliding() and !rightCast.is_colliding():
@@ -208,6 +211,7 @@ func get_center_pos():
 	return get_pos() + get_node("CollisionShape2D").get_pos()
 
 func death():
+	immune_timer.stop()
 	game_manager.spawnpoint = 1
 	timer.stop()
 	steps_timer.play_death_sound()
@@ -225,25 +229,27 @@ func disable():
 	steps_timer.steps_on = false
 	gun.can_fire = false
 	
-	
 func enable():
 	can_act = true
 	gun.can_fire = true
 	
 func take_damage(body, dmg):
-	hp -= dmg
-	state_machine.hurt()
-	can_act = false
-	steps_timer.play_hurt_sound()
-	if hp > 0:
-		knockback(body)
-		timer.start()
-		game_manager.camera.shake(0.5,10,5)
-	elif not game_manager.game_over:
-		game_manager.camera.shake(2,5,3)
-		game_manager.game_over = true
-		death()
-	update_healthbar()
+	if not game_manager.game_over:
+		hp -= dmg
+		can_act = false
+		steps_timer.play_hurt_sound()
+		if hp > 0:
+			knockback(body)
+			timer.start()
+			state_machine.hurt()
+			game_manager.camera.shake(0.5,10,5)
+			immune_timer.start()
+		else:
+			print("dead")
+			game_manager.camera.shake(2,5,3)
+			game_manager.game_over = true
+			death()
+		update_healthbar()
 
 func update_healthbar():
 	var _hp = hp/float(max_hp)
@@ -266,6 +272,14 @@ func add_health(amount):
 		hp = max_hp
 	update_healthbar()
 	
+func on_immunity_timer_timeout():
+	immune_timer.stop()
+	var bodies = area.get_overlapping_bodies()
+	for body in bodies:
+		if body == overlapping_body:
+			take_damage(body, body.damage)
+			break
+	
 func flip():
 	facing_dir = -1
 	sprite.set_scale(Vector2(facing_dir,1))
@@ -273,6 +287,7 @@ func flip():
 	
 func on_player_body_enter(body):
 	if body.is_in_group("enemy"):
+		overlapping_body = body
 		take_damage(body, body.damage)
 		if hp > 0:
 			body.contact()
@@ -282,6 +297,7 @@ func on_player_body_enter(body):
 func _ready():
 	timer.connect("timeout", self, "on_player_timer_timerout")
 	area.connect("body_enter", self, "on_player_body_enter")
+	immune_timer.connect("timeout", self, "on_immunity_timer_timeout")
 	game_manager.current_scene.get_node("Camera2D").start_camera(self)
 	hp = game_manager.health
 

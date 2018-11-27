@@ -3,9 +3,11 @@ extends KinematicBody2D
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
+
 onready var sprite = get_node("Sprite")
 onready var state_machine = get_node("EnemyStateMachine")
 onready var timer = get_node("Timer")
+
 onready var sample_player = get_node("SamplePlayer2D")
 
 var coin = preload("res://Scenes/coin.tscn")
@@ -88,6 +90,5 @@ func death():
 		drop_item(coin)
 	elif r < 5:
 		drop_item(ammo)
-	
 	
 	queue_free()

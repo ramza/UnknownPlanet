@@ -3,21 +3,21 @@ extends KinematicBody2D
 var can_act = true
 var claw_attack = preload("res://Scenes/claw_attack.tscn")
 var fireball = preload("res://Scenes/fireball.tscn")
-var explosion = preload("res://Scenes/small_explosion.tscn")
+var explosion = preload("res://Scenes/boss_explosion.tscn")
 var coin = preload("res://Scenes/coin.tscn")
 var ammo = preload("res://Scenes/ammopack.tscn")
 export var hp = 5
 export var damage = 1
 var player 
 
-var super_walk_right = false
-var super_walk_left = false
 var facing_dir = 1
 onready var state_machine = get_node("EnemyStateMachine")
 onready var sprite = get_node("Sprite")
 onready var timer = get_node("Timer")
 onready var rightcast = get_node("RightCast")
+onready var rightcast1 = get_node("RightCast1")
 onready var leftcast = get_node("LeftCast")
+onready var leftcast1 = get_node("LeftCast1")
 onready var left_footcast = get_node("LeftFootCast")
 onready var right_footcast = get_node("RightFootCast")
 onready var sample_plyr = get_node("SamplePlayer2D")
@@ -41,6 +41,9 @@ const JUMP_MAX_AIRBORNE_TIME = 0.2
 
 const SLIDE_STOP_VELOCITY = 1.0 # One pixel per second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # One pixel
+
+var super_walk_l
+var super_walk_r
 
 var velocity = Vector2()
 var on_air_time = 100
@@ -77,10 +80,13 @@ func do_spell():
 func take_damage(damage):
 	if player == null:
 		player = get_tree().get_root().get_child(1).get_node("player")
-	elif player.get_pos().x - get_pos().x < 0:
-		super_walk_left
-	else:
-		super_walk_right
+
+	if facing_dir == -1 and player.get_pos().x > get_pos().x:
+		super_walk_r
+		print("super walk rigth")
+	elif facing_dir == 1 and player.get_pos().x < get_pos().x:
+		super_walk_l
+		
 	hp -= damage
 	sample_plyr.play("hurt")
 	if (!overrun):
@@ -98,26 +104,34 @@ func death():
 	var new_explosion = explosion.instance()
 	new_explosion.set_pos(self.get_pos())
 	get_parent().add_child(new_explosion)
-	
-	var r = rand_range(0,10)
-	if r < 3:
-		drop_item(coin)
-	elif r < 5:
-		drop_item(ammo)
+	game_manager.player.disable()
 	
 	queue_free()
 	
 func walk_right():
+	if super_walk_r:
+		return true
 	if rightcast.is_colliding():
 		var body = rightcast.get_collider()
+		#print("hit a " + body.get_name())
+		if body != null and body.is_in_group("player"):
+			return true
+	elif rightcast1.is_colliding():
+		var body = rightcast1.get_collider()
 		#print("hit a " + body.get_name())
 		if body != null and body.is_in_group("player"):
 			return true
 	return false
 	
 func walk_left():
+	if super_walk_l:
+		return true
 	if leftcast.is_colliding():
 		var body = leftcast.get_collider()
+		if body != null and body.is_in_group("player"):
+			return true
+	elif leftcast1.is_colliding():
+		var body = leftcast1.get_collider()
 		if body != null and body.is_in_group("player"):
 			return true
 	return false
@@ -138,13 +152,13 @@ func movement(delta):
 	
 	var force = Vector2(0, GRAVITY)
 	
-	var walk_left = walk_left() 
+	var walk_left = walk_left()
 	var walk_right = walk_right()
 	var jump = false
 	
 	var stop = true
 	
-	if ((walk_left or super_walk_left) and can_act and left_footcast.is_colliding()  and !leftcastupper.is_colliding()):
+	if ((walk_left) and can_act and left_footcast.is_colliding()  and !leftcastupper.is_colliding()):
 		if (velocity.x <= WALK_MIN_SPEED and velocity.x > -WALK_MAX_SPEED):
 			force.x -= WALK_FORCE
 			facing_dir = -1
@@ -154,8 +168,9 @@ func movement(delta):
 			attack_target.set_pos(Vector2(-40, attack_target.get_pos().y))
 			spell_target.set_pos(Vector2(-40, 0))
 			walk_timer=0
-	elif ((super_walk_right or walk_right) and can_act and right_footcast.is_colliding() and !rightcastupper.is_colliding()):
+	elif ((walk_right) and can_act and right_footcast.is_colliding() and !rightcastupper.is_colliding()):
 		if (velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED):
+			print("walk rigtht")
 			force.x += WALK_FORCE
 			facing_dir = 1
 			stop = false
@@ -184,7 +199,7 @@ func movement(delta):
 			state_machine.idle()
 			
 		spell_timer += delta
-		if spell_timer > spell_delay:
+		if spell_timer > spell_delay and ( (facing_dir == -1 and player.get_pos().x < get_pos().x) or (facing_dir == 1 and player.get_pos().x > get_pos().x)):
 			do_spell()
 			spell_timer = 0
 	# Integrate forces to velocity

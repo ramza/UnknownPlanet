@@ -40,6 +40,9 @@ var scenes = [
      "temple_5",
      "temple_boss",
      "temple_4",
+     "story",
+     "ending",
+     "title",
 ]
 var current_scene_index = 1
 var current_scene
@@ -48,10 +51,13 @@ var HUD
 
 var killed_worm = false
 
-var hp_upgrade = true
-var gun_upgrade = true
-var firerate_upgrade = true
-var speed_boots = true
+var hp_upgrade = false
+var hp_upgrade2 = false
+var gun_upgrade = false
+var gun_upgrade2 = false
+var firerate_upgrade = false
+var firerate_upgrade2 = false
+var speed_boots = false
 
 var blue_card = false
 var red_card = false
@@ -70,7 +76,7 @@ func _ready():
 	print(current_scene.get_name())
 	music_player = global_scene.get_node("StreamPlayer")
 	last_song = caves_song
-	if current_scene.get_name() != "Title":
+	if !current_scene.is_in_group("cutscene") and current_scene.get_name() != "Title" and current_scene.get_name() != "Story":
 		initialize_scene()
 
 	
@@ -80,11 +86,18 @@ func initialize_scene():
 	player = player_scene.instance()
 	player.set_global_pos(current_scene.get_node("SpawnPoint"+str(spawnpoint)).get_global_pos())
 	player.get_node("LaserGun").ammo = ammo
-	if hp_upgrade:
+	
+	if hp_upgrade2:
+		player.max_hp += 2
+	elif hp_upgrade:
 		player.max_hp += 1
-	if gun_upgrade:
+	if gun_upgrade2:
+		player.get_node("LaserGun").energy_replenish_delay = 0.25
+	elif gun_upgrade:
 		player.get_node("LaserGun").energy_replenish_delay = 0.5
-	if firerate_upgrade:
+	if firerate_upgrade2:
+		player.get_node("LaserGun").firerate = 0.1
+	elif firerate_upgrade:
 		player.get_node("LaserGun").firerate = 0.15
 	if speed_boots:
 		player.speed_bonus = 1.2
@@ -93,10 +106,13 @@ func initialize_scene():
 	if ( spawnpoint % 2 == 0):
 		player.flip()
 		
+	player = current_scene.get_node("player")
 	handle_music()
 		
 func handle_music():
 	var stream
+	if current_scene.is_in_group("cutscene"):
+		stream = temple_song
 	if current_scene.is_in_group("ship"):
 		stream = ship_song
 	elif current_scene.is_in_group("caves"):
@@ -149,5 +165,7 @@ func _deferred_goto_scene(path):
     # Optional, to make it compatible with the SceneTree.change_scene() API.
     get_tree().set_current_scene(current_scene)
 
-    initialize_scene()
+    
+    if !current_scene.is_in_group("cutscene"):
+        initialize_scene()
 

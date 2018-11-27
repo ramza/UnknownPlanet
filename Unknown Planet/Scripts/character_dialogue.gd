@@ -8,6 +8,7 @@ onready var area = get_node("Area2D")
 onready var sample_player = get_node("SamplePlayer2D")
 var can_continue = true
 
+export var heal_player = false
 export var get_keycard = false
 export var get_red_keycard = false
 
@@ -49,6 +50,9 @@ func on_character_dialogue_timer_timeout():
 
 func on_character_dialogue_body_enter(body):
 	if !active and body.is_in_group("player"):
+		if heal_player:
+			game_manager.player.hp = game_manager.player.max_hp
+			game_manager.player.update_healthbar()
 		active = true
 		body.disable()
 		player = body

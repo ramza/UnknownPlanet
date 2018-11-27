@@ -280,6 +280,7 @@ _update_shape_index = 0
 
 [node name="PlayerStateMachine" type="Node" parent="."]
 
+editor/display_folded = true
 script/script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerStateMachine"]
@@ -327,6 +328,7 @@ type_mask = 15
 
 [node name="Steps_Timer" type="Timer" parent="."]
 
+editor/display_folded = true
 process_mode = 1
 wait_time = 0.3
 one_shot = false
@@ -344,5 +346,12 @@ params/attenuation/distance_exp = 1.0
 config/polyphony = 2
 config/samples = SubResource( 13 )
 config/pitch_random = 0.0
+
+[node name="ImmunityTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 

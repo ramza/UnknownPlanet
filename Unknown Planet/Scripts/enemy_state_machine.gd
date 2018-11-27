@@ -29,7 +29,7 @@ func do_animation():
 		current_anim = "dead"
 	elif state == STATES.ATTACK:
 		current_anim = "attack"
-		
+
 	if !anim.is_playing() || state != prev_state:
 		anim.play(current_anim)
 

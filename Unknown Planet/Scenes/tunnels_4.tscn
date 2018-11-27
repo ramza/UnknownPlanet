@@ -164,7 +164,6 @@ transform/pos = Vector2( 6, 53 )
 transform/pos = Vector2( -192, 48 )
 scene_index = 17
 start_position = 2
-needs_red_keycard = false
 
 [node name="LiftTrigger" parent="." instance=ExtResource( 9 )]
 

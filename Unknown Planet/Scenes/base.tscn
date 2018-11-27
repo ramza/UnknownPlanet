@@ -7,7 +7,7 @@
 [ext_resource path="res://Scripts/character_dialogue.gd" type="Script" id=5]
 [ext_resource path="res://Art/wounded_soldier.png" type="Texture" id=6]
 [ext_resource path="res://Audio/SFX/powerup.wav" type="Sample" id=7]
-[ext_resource path="res://Scenes/beacon.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Audio/SFX/talk.wav" type="Sample" id=8]
 [ext_resource path="res://Scenes/darkness.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Art/lightmap.tex" type="Texture" id=10]
 [ext_resource path="res://Art/light.png" type="Texture" id=11]
@@ -25,6 +25,12 @@ samples/powerup = {
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 7 )
+}
+samples/talk = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 8 )
 }
 
 [node name="Base" type="Node2D" groups=[
@@ -98,7 +104,9 @@ collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 5 )
 get_keycard = true
+get_red_keycard = false
 messeges = [ "You got our signal?", "*Cough* Haha. I'm sorry.", "We crashed here, but then they came for us.", "The creatures.", "They took everyone underground.", "Take this keycard. Use it to find the other survivors." ]
+alt_messege = "Try to help the others."
 
 [node name="Sprite" type="Sprite" parent="Soldier"]
 
@@ -140,11 +148,6 @@ params/attenuation/distance_exp = 1.0
 config/polyphony = 1
 config/samples = SubResource( 2 )
 config/pitch_random = 0.0
-
-[node name="Beacon" parent="." instance=ExtResource( 8 )]
-
-transform/pos = Vector2( 64, 128 )
-scene = 1
 
 [node name="SpawnPoint1" type="Position2D" parent="."]
 

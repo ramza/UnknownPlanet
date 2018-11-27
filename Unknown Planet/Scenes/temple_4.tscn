@@ -625,13 +625,11 @@ transform/pos = Vector2( 531, 36 )
 
 transform/pos = Vector2( 112, 336 )
 start_position = 2
-needs_red_keycard = false
 
 [node name="Portal1" parent="." instance=ExtResource( 16 )]
 
 transform/pos = Vector2( 560, 32 )
 scene_index = 16
-needs_red_keycard = false
 
 [node name="BreakableBrick" parent="." instance=ExtResource( 17 )]
 

@@ -10,6 +10,7 @@ var doc2
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	game_manager.game_over = false
 	doc1 = get_node("Doctor1")
 	doc2 = get_node("Doctor2")
 	if game_manager.blue_card:

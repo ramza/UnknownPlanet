@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 4, 4 )
+extents = Vector2( 6, 6 )
 
 [sub_resource type="SampleLibrary" id=2]
 

@@ -66,6 +66,7 @@ script/script = ExtResource( 1 )
 scene_index = 0
 start_position = 1
 needs_keycard = false
+needs_red_keycard = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

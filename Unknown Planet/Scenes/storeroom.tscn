@@ -9,8 +9,8 @@
 [ext_resource path="res://Art/lightmap.tex" type="Texture" id=7]
 [ext_resource path="res://Art/light.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/coin.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/healthpack.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/portal_blue.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/portal_blue.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/ammopack.tscn" type="PackedScene" id=11]
 
 [node name="StoreRoom" type="Node2D" groups=[
 "ladder",
@@ -78,6 +78,7 @@ y_lock = true
 
 transform/pos = Vector2( -128, 128 )
 scene = 1
+blue_beacon = false
 
 [node name="SpawnPoint1" type="Position2D" parent="."]
 
@@ -161,14 +162,23 @@ transform/pos = Vector2( -50, 132 )
 
 transform/pos = Vector2( -36, 132 )
 
-[node name="HealthPack" parent="." instance=ExtResource( 10 )]
-
-transform/pos = Vector2( -176, 128 )
-
-[node name="PortalBlue" parent="." instance=ExtResource( 11 )]
+[node name="PortalBlue" parent="." instance=ExtResource( 10 )]
 
 transform/pos = Vector2( 208, 128 )
 scene_index = 4
 start_position = 3
+needs_red_keycard = false
+
+[node name="AmmoPickUp" parent="." instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -176, 136 )
+
+[node name="AmmoPickUp1" parent="." instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -168, 136 )
+
+[node name="AmmoPickUp2" parent="." instance=ExtResource( 11 )]
+
+transform/pos = Vector2( -159, 136 )
 
 
