@@ -164,6 +164,7 @@ transform/pos = Vector2( 48, 128 )
 
 [node name="Soldier" type="KinematicBody2D" parent="."]
 
+editor/display_folded = true
 transform/pos = Vector2( 0, 128 )
 input/pickable = false
 collision/layers = 1
@@ -173,7 +174,7 @@ script/script = ExtResource( 6 )
 heal_player = false
 get_keycard = false
 get_red_keycard = true
-messeges = [ "Holy &*%$. I can believe someone came.", "I was trapped by the worm. Been down here for days.", "Thank god you killed it. Now I can use the beacon.", "There are others who went deeper.", "We tried to fight back, but they were too strong.", "Take this keycard. Use it to find the other survivors." ]
+messeges = [ "Holy &*%$. I can't believe someone came.", "I was trapped by the worm. Been down here for days.", "Thank god you killed it. Now I can use the beacon.", "There are others who went deeper.", "We tried to fight back, but they were too strong.", "Take this keycard. Use it to find the other survivors." ]
 alt_messege = "Try to help the others."
 
 [node name="Sprite" type="Sprite" parent="Soldier"]

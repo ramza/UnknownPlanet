@@ -9,7 +9,7 @@
 [ext_resource path="res://Art/lightmap.tex" type="Texture" id=7]
 [ext_resource path="res://Scenes/torch.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/portal.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scripts/rain.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/weather_control.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Animation" id=1]
 
@@ -220,8 +220,6 @@ transform/pos = Vector2( -800, 32 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="WeatherControl" type="Node2D" parent="."]
-
-script/script = ExtResource( 10 )
+[node name="WeatherControl" parent="." instance=ExtResource( 10 )]
 
 

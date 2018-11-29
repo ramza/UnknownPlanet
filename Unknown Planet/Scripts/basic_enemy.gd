@@ -16,8 +16,8 @@ var ammo = preload("res://Scenes/ammopack.tscn")
 export var invincible = false
 export var damage = 1
 var explosion
-var hp = 3
-var max_hp = 3
+export var hp = 3
+var max_hp
 var can_act = true
 
 const GRAVITY = 500.0
@@ -28,6 +28,7 @@ func load_explosion():
 	explosion = load("res://Scenes/small_explosion.tscn")
 
 func _ready():
+	max_hp = hp
 	# Called every time the node is added to the scene.
 	# Initialization here
 	initialize_enemy()

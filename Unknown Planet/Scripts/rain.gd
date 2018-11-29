@@ -25,5 +25,6 @@ func make_rain():
 	randomize()
 	var rand = rand_range(1,100)
 	if (rand < 50):
+		print("rain")
 		var r = rain.instance()
 		game_manager.camera.add_child(r)

@@ -103,6 +103,7 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 5 )
+heal_player = false
 get_keycard = true
 get_red_keycard = false
 messeges = [ "You got our signal?", "*Cough* Haha. I'm sorry.", "We crashed here, but then they came for us.", "The creatures.", "They took everyone underground.", "Take this keycard. Use it to find the other survivors." ]

@@ -14,8 +14,9 @@ var ship_song = preload("res://Audio/Music/dungeon_vibes.ogg")
 var caves_song = preload("res://Audio/Music/Nebuli.ogg")
 var boss_song = preload("res://Audio/Music/Divide.ogg")
 var tunnels_song = preload("res://Audio/Music/falling_to_earth.ogg")
-var caverns_song = preload("res://Audio/Music/Theme.ogg")
+var caverns_song = preload("res://Audio/Music/theme.ogg")
 var temple_song = preload("res://Audio/Music/Questitude.ogg")
+var ending_song = preload("res://Audio/Music/world.ogg")
 
 var music_player
 var scenes = [
@@ -73,11 +74,13 @@ func _ready():
 	# Initialization here
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() -1)
-	print(current_scene.get_name())
+
 	music_player = global_scene.get_node("StreamPlayer")
 	last_song = caves_song
-	if !current_scene.is_in_group("cutscene") and current_scene.get_name() != "Title" and current_scene.get_name() != "Story":
+	if !current_scene.is_in_group("cutscene") and !current_scene.is_in_group("ending") and current_scene.get_name() != "Title" and current_scene.get_name() != "Story":
 		initialize_scene()
+	if current_scene.is_in_group("ending"):
+		handle_music()
 
 	
 func initialize_scene():
@@ -112,8 +115,8 @@ func initialize_scene():
 func handle_music():
 	var stream
 	if current_scene.is_in_group("cutscene"):
-		stream = temple_song
-	if current_scene.is_in_group("ship"):
+		stream = caverns_song
+	elif current_scene.is_in_group("ship"):
 		stream = ship_song
 	elif current_scene.is_in_group("caves"):
 		stream = caves_song
@@ -125,6 +128,9 @@ func handle_music():
 		stream = boss_song
 	elif current_scene.is_in_group("temple"):
 		stream = temple_song
+	elif current_scene.is_in_group("ending"):
+		print("playe ending")
+		stream = ending_song
 	
 	if(music_player.get_stream() != stream or !music_player.is_playing()):
 		music_player.set_stream(stream)
@@ -166,6 +172,9 @@ func _deferred_goto_scene(path):
     get_tree().set_current_scene(current_scene)
 
     
-    if !current_scene.is_in_group("cutscene"):
+    if !current_scene.is_in_group("cutscene") and !current_scene.is_in_group("ending"):
         initialize_scene()
+
+    else:
+        handle_music()
 

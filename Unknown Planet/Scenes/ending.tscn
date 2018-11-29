@@ -4,7 +4,7 @@
 [ext_resource path="res://Other/ingame.fnt" type="BitmapFont" id=2]
 
 [node name="Ending" type="Node2D" groups=[
-"cutscene",
+"ending",
 ]]
 
 script/script = ExtResource( 1 )

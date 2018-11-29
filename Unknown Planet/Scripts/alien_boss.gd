@@ -62,7 +62,7 @@ var spell_delay = 2
 func attack():
 	var attack = claw_attack.instance()
 	attack.set_pos(attack_target.get_pos())
-	attack.set_scale(Vector2(facing_dir,1))
+	attack.set_scale(Vector2(-facing_dir,1))
 	add_child(attack)
 	can_act = false
 	attack_timer.start()
@@ -83,7 +83,6 @@ func take_damage(damage):
 
 	if facing_dir == -1 and player.get_pos().x > get_pos().x:
 		super_walk_r
-		print("super walk rigth")
 	elif facing_dir == 1 and player.get_pos().x < get_pos().x:
 		super_walk_l
 		
@@ -116,7 +115,7 @@ func walk_right():
 		#print("hit a " + body.get_name())
 		if body != null and body.is_in_group("player"):
 			return true
-	elif rightcast1.is_colliding():
+	if rightcast1.is_colliding():
 		var body = rightcast1.get_collider()
 		#print("hit a " + body.get_name())
 		if body != null and body.is_in_group("player"):
@@ -130,7 +129,8 @@ func walk_left():
 		var body = leftcast.get_collider()
 		if body != null and body.is_in_group("player"):
 			return true
-	elif leftcast1.is_colliding():
+	if leftcast1.is_colliding():
+
 		var body = leftcast1.get_collider()
 		if body != null and body.is_in_group("player"):
 			return true
@@ -170,7 +170,7 @@ func movement(delta):
 			walk_timer=0
 	elif ((walk_right) and can_act and right_footcast.is_colliding() and !rightcastupper.is_colliding()):
 		if (velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED):
-			print("walk rigtht")
+			#print("walk rigtht")
 			force.x += WALK_FORCE
 			facing_dir = 1
 			stop = false
@@ -195,9 +195,10 @@ func movement(delta):
 		velocity.x = vlen*vsign
 	
 	if velocity.x == 0 and velocity.y == 0:
-		if state_machine.state != state_machine.STATES.HURT and state_machine.state != state_machine.STATES.ATTACK:
+		if state_machine.state != state_machine.STATES.HURT and state_machine.state != state_machine.STATES.ATTACK and state_machine.state != state_machine.STATES.SPELL:
 			state_machine.idle()
-			
+		
+
 		spell_timer += delta
 		if spell_timer > spell_delay and ( (facing_dir == -1 and player.get_pos().x < get_pos().x) or (facing_dir == 1 and player.get_pos().x > get_pos().x)):
 			do_spell()
@@ -273,7 +274,6 @@ func disable():
 	
 func on_enemy_timer_timeout():
 	timer.stop()
-
 	can_act = true
 	
 func on_enemy_attack_timer_timeout():

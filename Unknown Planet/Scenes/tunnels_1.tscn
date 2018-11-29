@@ -679,8 +679,6 @@ scene_index = 5
 
 [node name="platforms" type="Node2D" parent="."]
 
-editor/display_folded = true
-
 [node name="oneway_platform" parent="platforms" instance=ExtResource( 16 )]
 
 transform/pos = Vector2( -80, 176 )
@@ -705,10 +703,6 @@ transform/pos = Vector2( -96, 80 )
 
 transform/pos = Vector2( -160, 368 )
 
-[node name="oneway_platform2 2" parent="platforms" instance=ExtResource( 16 )]
-
-transform/pos = Vector2( -160, 528 )
-
 [node name="oneway_platform23" parent="platforms" instance=ExtResource( 16 )]
 
 transform/pos = Vector2( -32, 208 )
@@ -716,6 +710,10 @@ transform/pos = Vector2( -32, 208 )
 [node name="oneway_platform_small 2" parent="platforms" instance=ExtResource( 17 )]
 
 transform/pos = Vector2( -96, 464 )
+
+[node name="oneway_platform_small4" parent="platforms" instance=ExtResource( 17 )]
+
+transform/pos = Vector2( -160, 528 )
 
 [node name="oneway_platform_small3" parent="platforms" instance=ExtResource( 17 )]
 

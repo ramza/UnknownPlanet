@@ -414,6 +414,7 @@ editor/display_folded = true
 transform/pos = Vector2( -48, 96 )
 invincible = false
 damage = 1
+hp = 3
 
 [node name="Alien" parent="Enemies" instance=ExtResource( 9 )]
 
@@ -424,24 +425,28 @@ transform/pos = Vector2( 176, 16 )
 transform/pos = Vector2( 16, 32 )
 invincible = false
 damage = 1
+hp = 3
 
 [node name="Jelly2" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( -80, 64 )
 invincible = false
 damage = 1
+hp = 3
 
 [node name="Jelly3" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 464, 80 )
 invincible = false
 damage = 1
+hp = 3
 
 [node name="Jelly4" parent="Enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 432, 32 )
 invincible = false
 damage = 1
+hp = 3
 
 [node name="Pickups" type="Node2D" parent="."]
 

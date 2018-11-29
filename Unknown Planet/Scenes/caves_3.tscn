@@ -39,6 +39,8 @@ tracks/0/keys = {
 
 [node name="Environment" type="Node" parent="."]
 
+editor/display_folded = true
+
 [node name="CanvasParallax" type="CanvasLayer" parent="Environment"]
 
 layer = 1
@@ -105,48 +107,6 @@ transform/pos = Vector2( -144, 96 )
 
 [node name="Torches" type="Node2D" parent="."]
 
-[node name="Torch1" type="Light2D" parent="Torches"]
-
-editor/display_folded = true
-transform/pos = Vector2( 192, 32 )
-enabled = true
-editor_only = false
-texture = ExtResource( 5 )
-offset = Vector2( 0, 0 )
-scale = 0.3
-color = Color( 1, 1, 1, 1 )
-energy = 1.0
-mode = 0
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 1024
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
-
-[node name="Sprite" type="Sprite" parent="Torches/Torch1"]
-
-texture = ExtResource( 6 )
-vframes = 2
-hframes = 2
-frame = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Torches/Torch1"]
-
-playback/process_mode = 1
-playback/default_blend_time = 0.0
-root/root = NodePath("..")
-anims/burn = SubResource( 1 )
-playback/active = true
-playback/speed = 1.0
-blend_times = [  ]
-autoplay = "burn"
-
 [node name="Torch5" type="Light2D" parent="Torches"]
 
 editor/display_folded = true
@@ -192,7 +152,7 @@ autoplay = "burn"
 [node name="Torch6" type="Light2D" parent="Torches"]
 
 editor/display_folded = true
-transform/pos = Vector2( -57, 63 )
+transform/pos = Vector2( -16, 48 )
 enabled = true
 editor_only = false
 texture = ExtResource( 5 )
@@ -234,7 +194,7 @@ autoplay = "burn"
 [node name="Torch7" type="Light2D" parent="Torches"]
 
 editor/display_folded = true
-transform/pos = Vector2( -192, 32 )
+transform/pos = Vector2( -192, 48 )
 enabled = true
 editor_only = false
 texture = ExtResource( 5 )

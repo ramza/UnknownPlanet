@@ -12,7 +12,7 @@ extents = Vector2( 3, 3 )
 [sub_resource type="SampleLibrary" id=2]
 
 samples/fx = {
-"db": -3.0,
+"db": -15.0,
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 3 )
